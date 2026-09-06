@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parakh — Clay • Squeeze your PDF into a real mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Inter:wght@500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FFF7EB;
+  --cream2:#FFF1DC;
+  --peach:#FFDCC3;
+  --peach2:#FFB88C;
+  --peach-dark:#E8A07A;
+  --mint:#D6F5D6;
+  --mint2:#A7E8B0;
+  --mint-dark:#8AC99A;
+  --lav:#E8E0FF;
+  --lav2:#C4B5FD;
+  --lav-dark:#A99AE5;
+  --sky:#D6EEFF;
+  --sky2:#93C5FD;
+  --ink:#2E1F14;
+  --ink2:#5A3E2B;
+  --muted:#8D7A6E;
+  --line:#FFE8D1;
+  --radius:28px;
+  --radius-lg:32px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none}
+::selection{background:#FFDCC3}
+
+/* background clay blobs */
+.bg{
+  position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  background:var(--cream);
+}
+.blob{
+  position:absolute;border-radius:50%;filter:blur(1px);
+}
+.b1{width:640px;height:640px;background:radial-gradient(circle at 30% 30%, #FFDCC3 0%, #FFC8A8 55%, transparent 72%);top:-180px;left:-120px;opacity:.9}
+.b2{width:720px;height:520px;background:radial-gradient(circle at 50% 50%, #D6F5D6 0%, #B8E8C8 55%, transparent 72%);top:120px;right:-180px;opacity:.85}
+.b3{width:600px;height:600px;background:radial-gradient(circle at 40% 40%, #E8E0FF 0%, #DDD0FF 50%, transparent 70%);bottom:-180px;left:30%;opacity:.8}
+.b4{width:420px;height:420px;background:radial-gradient(circle at 50% 50%, #FFF0C8 0%, #FFE8A0 60%, transparent 75%);bottom:18%;right:12%;opacity:.6}
+
+/* clay utility */
+.clay{
+  background:white;
+  border:3px solid #FFE8D1;
+  border-radius:28px;
+  box-shadow:
+    12px 12px 24px rgba(166,120,70,.14),
+    -10px -10px 20px rgba(255,255,255,.9),
+    inset 2px 2px 6px rgba(255,255,255,.95),
+    inset -2px -2px 6px rgba(166,120,70,.06);
+}
+.clay-peach{
+  background:linear-gradient(135deg, #FFF4E8 0%, #FFDCC3 100%);
+  border-color:#FFD8B8;
+  box-shadow:
+    12px 12px 24px rgba(180,120,70,.16),
+    -10px -10px 20px rgba(255,255,255,.9),
+    inset 2px 2px 6px rgba(255,255,255,.85),
+    inset -2px -2px 8px rgba(180,120,70,.08);
+}
+.clay-mint{
+  background:linear-gradient(135deg, #F0FFF0 0%, #D6F5D6 100%);
+  border-color:#C8EAC8;
+  box-shadow:
+    10px 10px 22px rgba(90,140,90,.12),
+    -10px -10px 20px rgba(255,255,255,.9),
+    inset 2px 2px 6px rgba(255,255,255,.9),
+    inset -2px -2px 6px rgba(90,140,90,.06);
+}
+.clay-lav{
+  background:linear-gradient(135deg, #F5F0FF 0%, #E8E0FF 100%);
+  border-color:#DDD0FF;
+  box-shadow:
+    10px 10px 22px rgba(110,90,160,.11),
+    -10px -10px 20px rgba(255,255,255,.9),
+    inset 2px 2px 6px rgba(255,255,255,.9),
+    inset -2px -2px 6px rgba(110,90,160,.06);
+}
+.clay-sky{
+  background:linear-gradient(135deg, #F0F8FF 0%, #D6EEFF 100%);
+  border-color:#C8E0FF;
+}
+
+/* nav pill clay */
+.nav-wrap{position:sticky;top:16px;z-index:30;padding:0 16px}
+.nav{
+  max-width:1160px;margin:0 auto;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(12px);
+  border:3px solid white;
+  border-radius:999px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 12px 10px 16px;
+  box-shadow:
+    10px 10px 20px rgba(166,120,70,.12),
+    -8px -8px 18px rgba(255,255,255,.9),
+    inset 2px 2px 4px rgba(255,255,255,.9),
+    inset -1px -1px 3px rgba(166,120,70,.06);
+}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg, #FFDCC3, #FFB88C);
+  border:3px solid white;
+  display:grid;place-items:center;font-weight:900;font-size:15px;
+  box-shadow:
+    6px 6px 12px rgba(180,120,70,.18),
+    -4px -4px 10px rgba(255,255,255,.9),
+    inset 2px 2px 4px rgba(255,255,255,.8);
+  transform:rotate(-3deg);
+}
+.logo-type{font-family:'Nunito',sans-serif;font-weight:900;letter-spacing:-.03em;font-size:18px}
+.logo-type span{font-weight:700;color:var(--muted);font-size:13px;background:rgba(255,220,195,.6);padding:3px 8px;border-radius:999px;border:2px solid white;box-shadow:2px 2px 6px rgba(166,120,70,.1)}
+.nav-links{display:flex;gap:22px;font-size:13.5px;font-weight:700;color:var(--ink2)}
+.nav-links a{padding:6px 10px;border-radius:999px;transition:.2s;border:2px solid transparent}
+.nav-links a:hover{background:white;border-color:#FFE8D1;box-shadow:4px 4px 10px rgba(166,120,70,.1), -3px -3px 8px rgba(255,255,255,.8);transform:translateY(-1px)}
+.nav-cta{display:flex;gap:10px;align-items:center}
+.btn-clay{
+  background:linear-gradient(135deg, #2E1F14 0%, #4A3320 100%);
+  color:white;border:3px solid white;padding:10px 18px;border-radius:999px;
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:13.5px;
+  display:inline-flex;gap:8px;align-items:center;cursor:pointer;
+  box-shadow:8px 8px 16px rgba(46,31,20,.18), -4px -4px 12px rgba(255,255,255,.7), inset 1px 1px 0 rgba(255,255,255,.15);
+  transition:.2s;
+}
+.btn-clay:hover{transform:translateY(-2px) scale(1.01);box-shadow:10px 10px 20px rgba(46,31,20,.2)}
+.btn-clay-peach{
+  background:linear-gradient(135deg, #FFDCC3, #FFB88C);color:var(--ink);border-color:white;
+  box-shadow:8px 8px 16px rgba(180,120,70,.16), -4px -4px 12px rgba(255,255,255,.8), inset 2px 2px 4px rgba(255,255,255,.7);
+}
+.btn-clay .arrow{width:22px;height:22px;background:white;color:var(--ink);border-radius:50%;display:grid;place-items:center;font-size:12px;box-shadow:2px 2px 6px rgba(0,0,0,.08)}
+
+/* hero left copy right stack */
+.hero{
+  max-width:1160px;margin:0 auto;padding:36px 16px 0;
+  display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center;
+}
+.hero-copy{text-align:left}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:white;border:3px solid white;border-radius:999px;padding:7px 14px 7px 9px;
+  font-size:12.5px;font-weight:800;box-shadow:6px 6px 14px rgba(166,120,70,.1), -5px -5px 12px rgba(255,255,255,.8), inset 1px 1px 0 rgba(255,255,255,.9);
+  margin-bottom:16px;transform:rotate(-.6deg);
+}
+.eyebrow i{width:10px;height:10px;background:#FF8A5B;border:3px solid white;border-radius:50%;display:inline-block;box-shadow:2px 2px 6px rgba(0,0,0,.1)}
+.hero h1{
+  font-family:'Nunito',sans-serif;
+  font-size:58px;line-height:.92;letter-spacing:-.04em;font-weight:900;color:var(--ink);
+  margin-bottom:14px;
+}
+.hero h1 .soft{font-weight:800;color:#8B7FFF;background:linear-gradient(135deg, #E8E0FF, #FFDCC3);padding:2px 10px;border-radius:14px;border:3px solid white;box-shadow:6px 6px 14px rgba(166,120,70,.12), -4px -4px 10px rgba(255,255,255,.7);display:inline-block;transform:rotate(-1deg)}
+.hero h1 .clay-word{
+  display:inline-block;background:linear-gradient(135deg, #D6F5D6, #A7E8B0);border:3px solid white;border-radius:16px;padding:2px 10px;
+  box-shadow:6px 6px 14px rgba(90,140,90,.13), -4px -4px 10px rgba(255,255,255,.8);transform:rotate(1deg)
+}
+.hero p.sub{font-size:16px;color:var(--muted);line-height:1.6;max-width:520px;margin-bottom:18px;font-weight:500}
+.hero p.sub strong{color:var(--ink);font-weight:800;background:rgba(255,255,255,.6);padding:1px 6px;border-radius:6px;border:2px solid white}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.trust{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12.5px;font-weight:700;color:var(--muted)}
+.trust-pill{
+  background:white;border:3px solid white;border-radius:999px;padding:6px 12px;display:flex;gap:8px;align-items:center;
+  box-shadow:5px 5px 12px rgba(166,120,70,.1), -4px -4px 10px rgba(255,255,255,.8);
+}
+.avatars{display:flex}
+.avatars span{width:26px;height:26px;border-radius:50%;border:3px solid white;margin-left:-8px;display:grid;place-items:center;font-size:10px;font-weight:900;color:white;box-shadow:3px 3px 8px rgba(0,0,0,.12)}
+.avatars span:first-child{margin-left:0;background:linear-gradient(135deg,#FFB88C,#FF8A5B)}
+.avatars span:nth-child(2){background:linear-gradient(135deg,#A7E8B0,#7AC99A)}
+.avatars span:nth-child(3){background:linear-gradient(135deg,#C4B5FD,#A78BFA)}
+
+/* hero visual stack - chunky inflated */
+.hero-visual{position:relative;padding:8px 0 12px;display:grid;gap:14px}
+.pdf-clay{
+  padding:16px 16px 14px;transform:rotate(-1deg);position:relative;
+  border-radius:28px;
+}
+.pdf-clay::after{
+  content:"PDF ♡";position:absolute;right:-8px;top:-10px;
+  background:linear-gradient(135deg, #FFDCC3, #FFB88C);border:3px solid white;border-radius:999px;
+  padding:5px 10px;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;letter-spacing:.04em;
+  box-shadow:6px 6px 12px rgba(180,120,70,.15), -3px -3px 8px rgba(255,255,255,.8);transform:rotate(8deg);
+}
+.pdf-head{display:flex;gap:10px;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:3px dashed #FFE0C0}
+.pdf-icon{
+  width:42px;height:42px;border-radius:14px;background:white;border:3px solid white;
+  display:grid;place-items:center;font-size:18px;
+  box-shadow:6px 6px 12px rgba(180,120,70,.12), -4px -4px 10px rgba(255,255,255,.9), inset 1px 1px 0 rgba(255,255,255,.9);
+}
+.pdf-meta strong{font-family:'Nunito',sans-serif;font-size:13.5px}
+.pdf-meta span{font-size:11.5px;color:var(--muted);font-weight:600}
+.pdf-badge{background:var(--ink);color:white;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:900;border:2px solid white;box-shadow:3px 3px 8px rgba(0,0,0,.12)}
+.lines{height:8px;background:rgba(46,31,20,.07);border-radius:999px;margin-bottom:7px;border:2px solid rgba(255,255,255,.6)}
+.lines.w90{width:90%} .w80{width:80%} .w60{width:60%}
+.q-clay{
+  margin:12px 0;padding:12px;border:3px solid white;border-radius:18px;
+  background:rgba(255,255,255,.75);box-shadow:inset 2px 2px 4px rgba(255,255,255,.9), 6px 6px 14px rgba(166,120,70,.08);
+}
+.q-clay b{font-family:'Nunito',sans-serif;font-size:12px}
+.q-opt{height:8px;border-radius:999px;background:rgba(46,31,20,.06);border:2px solid white;margin-top:6px;box-shadow:inset 1px 1px 2px rgba(0,0,0,.04)}
+.q-opt.fill{background:linear-gradient(90deg, #FFE4CC, #FFDCC3);border-color:white}
+
+.ai-bubble{
+  width:88%;justify-self:center;padding:14px 16px;border-radius:24px;
+  display:flex;align-items:center;gap:12px;transform:rotate(1deg);position:relative;z-index:2;
+  margin:-8px 0;
+}
+.ai-bubble::before{
+  content:"✦";position:absolute;left:-10px;top:-10px;width:28px;height:28px;
+  background:linear-gradient(135deg, #C4B5FD, #A78BFA);border:3px solid white;border-radius:50%;
+  display:grid;place-items:center;color:white;font-size:14px;box-shadow:4px 4px 10px rgba(110,90,160,.18);
+}
+.ai-logo{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg, #FFDCC3, #FFB88C);border:3px solid white;display:grid;place-items:center;font-weight:900;box-shadow:4px 4px 10px rgba(180,120,70,.14)}
+.scan{flex:1;height:10px;background:rgba(255,255,255,.7);border:3px solid white;border-radius:999px;overflow:hidden;box-shadow:inset 2px 2px 4px rgba(0,0,0,.05)}
+.scan i{display:block;height:100%;width:42%;background:linear-gradient(90deg, #A7E8B0, #7AC99A);border-radius:999px;animation:scan 1.6s ease-in-out infinite}
+@keyframes scan{0%{transform:translateX(-100%)}50%{transform:translateX(180%)}100%{transform:translateX(-100%)}}
+.ai-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;width:100%}
+.tag{font-size:11px;font-weight:800;padding:6px 9px;border-radius:999px;background:white;border:3px solid white;box-shadow:4px 4px 10px rgba(166,120,70,.08), -2px -2px 8px rgba(255,255,255,.7)}
+.tag.peach{background:linear-gradient(135deg, #FFF4E8, #FFDCC3)}
+.tag.mint{background:linear-gradient(135deg, #F0FFF0, #D6F5D6)}
+
+.cbt-monitor{
+  padding:0;overflow:hidden;transform:rotate(.6deg);border-radius:28px;
+  border-width:4px;
+}
+.cbt-top{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 14px;background:linear-gradient(135deg, #F5F0FF, #E8E0FF);border-bottom:3px solid white;
+}
+.cbt-top strong{font-family:'Nunito',sans-serif;font-size:11px;letter-spacing:.05em;display:flex;align-items:center;gap:8px}
+.cbt-top strong::before{content:"●";color:#FF8A5B;font-size:12px}
+.timer{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:800;
+  background:var(--ink);color:white;padding:6px 12px;border-radius:999px;border:3px solid white;box-shadow:4px 4px 10px rgba(0,0,0,.12);
+}
+.timer b{color:#FFDCC3}
+.cbt-body{display:grid;grid-template-columns:1.5fr .85fr}
+.cbt-left{padding:14px;border-right:3px solid white;background:rgba(255,255,255,.55)}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tab{font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;padding:7px 11px;border-radius:999px;border:3px solid white;background:white;box-shadow:4px 4px 10px rgba(166,120,70,.08)}
+.tab.active{background:var(--ink);color:white;box-shadow:4px 4px 10px rgba(46,31,20,.18)}
+.question{font-family:'Nunito',sans-serif;font-size:13.5px;font-weight:800;line-height:1.4;margin-bottom:10px}
+.options{display:grid;gap:7px;margin-bottom:12px}
+.opt{padding:9px 11px;border-radius:16px;border:3px solid white;background:white;display:flex;gap:9px;align-items:center;font-size:13px;font-weight:600;box-shadow:4px 4px 10px rgba(166,120,70,.08), -2px -2px 8px rgba(255,255,255,.6)}
+.opt b{width:24px;height:24px;border-radius:50%;border:3px solid #FFE8D1;display:grid;place-items:center;font-size:11px;background:#FFF7EB;flex-shrink:0}
+.opt.sel{background:linear-gradient(135deg, #FFF4E8, #FFDCC3);border-color:white;box-shadow:6px 6px 14px rgba(180,120,70,.12)}
+.opt.sel b{background:var(--ink);color:white;border-color:var(--ink)}
+.cbt-actions{display:flex;gap:8px}
+.mini-btn{flex:1;padding:9px;border-radius:999px;border:3px solid white;background:white;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;text-align:center;box-shadow:4px 4px 10px rgba(166,120,70,.08)}
+.mini-btn.dark{background:var(--ink);color:white}
+.cbt-right{padding:14px;background:linear-gradient(135deg, #F0FFF0, #E8FFF0)}
+.pal-head{display:flex;justify-content:space-between;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;margin-bottom:8px}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
+.pal{height:30px;border-radius:10px;display:grid;place-items:center;font-size:11px;font-weight:900;border:3px solid white;background:white;box-shadow:4px 4px 10px rgba(166,120,70,.08)}
+.pal.ans{background:var(--ink);color:white;border-color:var(--ink)}
+.pal.mark{background:linear-gradient(135deg,#FFDCC3,#FFB88C)}
+.pal.curr{outline:3px solid #A78BFA;outline-offset:1px}
+.legend{font-size:10px;font-weight:700;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.legend i{width:10px;height:10px;border-radius:4px;display:inline-block;border:2px solid white;box-shadow:2px 2px 6px rgba(0,0,0,.08)}
+.legend i.ans{background:var(--ink)} .legend i.mark{background:#FFDCC3} .legend i.not{background:white}
+.float-clay{
+  position:absolute;background:white;border:3px solid white;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:800;
+  box-shadow:6px 6px 14px rgba(166,120,70,.13), -4px -4px 10px rgba(255,255,255,.8);display:flex;gap:7px;align-items:center;z-index:3;
+}
+.float-clay .ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;border:2px solid white;box-shadow:2px 2px 6px rgba(0,0,0,.08)}
+.fc1{top:4px;right:6px;transform:rotate(2deg)}
+.fc1 .ic{background:linear-gradient(135deg,#FFDCC3,#FFB88C)}
+.fc2{bottom:6px;left:-6px;transform:rotate(-2deg)}
+.fc2 .ic{background:linear-gradient(135deg,#D6F5D6,#A7E8B0)}
+
+/* strip clay */
+.strip{max-width:1160px;margin:22px auto 0;padding:0 16px}
+.strip-inner{
+  background:white;border:3px solid white;border-radius:24px;padding:14px 16px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between;
+  box-shadow:10px 10px 20px rgba(166,120,70,.11), -8px -8px 16px rgba(255,255,255,.9), inset 1px 1px 0 rgba(255,255,255,.9);
+}
+.strip-label{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;letter-spacing:.08em;color:var(--muted);display:flex;gap:8px;align-items:center}
+.strip-label::before{content:"";width:20px;height:4px;background:linear-gradient(90deg, #FFB88C, #C4B5FD);border-radius:999px;border:2px solid white;box-shadow:2px 2px 6px rgba(0,0,0,.06)}
+.exam-pills{display:flex;gap:7px;flex-wrap:wrap}
+.exam-pill{padding:7px 11px;border-radius:999px;background:#FFF7EB;border:3px solid white;font-size:12.5px;font-weight:800;box-shadow:4px 4px 10px rgba(166,120,70,.08)}
+.exam-pill b{color:#E8A07A}
+.exam-pill.live{background:linear-gradient(135deg, #FFDCC3, #FFB88C);border-color:white;box-shadow:6px 6px 12px rgba(180,120,70,.14)}
+
+/* sections - distinct order: features first then experience then steps? We'll do features, then how, then experience */
+.section{max-width:1160px;margin:0 auto;padding:48px 16px 0}
+.section-head{text-align:center;max-width:660px;margin:0 auto 28px}
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;font-family:'Nunito',sans-serif;font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+  background:white;border:3px solid white;padding:6px 14px;border-radius:999px;box-shadow:5px 5px 12px rgba(166,120,70,.08), -4px -4px 10px rgba(255,255,255,.8);margin-bottom:12px;color:var(--muted);
+}
+.kicker i{width:8px;height:8px;background:linear-gradient(135deg,#FFB88C,#C4B5FD);border-radius:50%;border:2px solid white;display:inline-block;box-shadow:2px 2px 6px rgba(0,0,0,.08)}
+.section-head h2{font-family:'Nunito',sans-serif;font-size:40px;line-height:.92;letter-spacing:-.04em;font-weight:900;margin-bottom:10px}
+.section-head h2 em{font-weight:900;background:linear-gradient(135deg, #E8A07A, #A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-head p{color:var(--muted);font-size:15px;line-height:1.6;font-weight:500}
+
+/* features clay - 6 inflated cards */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat{
+  padding:18px;border-radius:24px;border:3px solid white;transition:.2s;
+  box-shadow:10px 10px 20px rgba(166,120,70,.1), -8px -8px 16px rgba(255,255,255,.8), inset 2px 2px 4px rgba(255,255,255,.85);
+  text-align:left;
+}
+.feat:nth-child(1){background:linear-gradient(135deg, #FFF4E8, #FFDCC3)}
+.feat:nth-child(2){background:linear-gradient(135deg, #F0FFF0, #D6F5D6)}
+.feat:nth-child(3){background:linear-gradient(135deg, #F5F0FF, #E8E0FF)}
+.feat:nth-child(4){background:linear-gradient(135deg, #FFF7EB, #FFE4CC)}
+.feat:nth-child(5){background:linear-gradient(135deg, #F0F8FF, #D6EEFF)}
+.feat:nth-child(6){background:linear-gradient(135deg, #FFF0F0, #FFD6D6)}
+.feat:hover{transform:translateY(-3px) scale(1.01);box-shadow:12px 12px 24px rgba(166,120,70,.14), -8px -8px 16px rgba(255,255,255,.9)}
+.feat-icon{width:42px;height:42px;border-radius:14px;background:white;border:3px solid white;display:grid;place-items:center;font-size:18px;margin-bottom:12px;box-shadow:6px 6px 12px rgba(166,120,70,.1), -3px -3px 8px rgba(255,255,255,.8)}
+.feat h4{font-family:'Nunito',sans-serif;font-size:15px;margin-bottom:6px;letter-spacing:-.02em}
+.feat p{font-size:13px;color:var(--ink2);line-height:1.6;font-weight:500;opacity:.85}
+
+/* experience - unique for clay: large mint clay card with monitor inside */
+.experience{max-width:1160px;margin:48px auto 0;padding:0 16px}
+.exp-wrap{
+  display:grid;grid-template-columns:.95fr 1.1fr;gap:20px;align-items:center;
+  background:linear-gradient(135deg, #F0FFF0, #E0FFE0);border:3px solid white;border-radius:32px;padding:20px;
+  box-shadow:12px 12px 24px rgba(90,140,90,.12), -10px -10px 20px rgba(255,255,255,.8), inset 2px 2px 6px rgba(255,255,255,.85);
+}
+.exp-copy{text-align:left}
+.exp-copy h2{font-family:'Nunito',sans-serif;font-size:34px;line-height:.92;letter-spacing:-.03em;margin-bottom:10px}
+.exp-copy h2 em{background:linear-gradient(135deg, #7AC99A, #2E1F14);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.exp-copy p{font-size:14.5px;color:var(--ink2);line-height:1.6;margin-bottom:14px;opacity:.85}
+.points{display:grid;gap:10px;margin-bottom:16px}
+.point{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.5;font-weight:600}
+.point i{width:30px;height:30px;border-radius:50%;background:white;border:3px solid white;display:grid;place-items:center;flex-shrink:0;box-shadow:4px 4px 10px rgba(0,0,0,.07);font-size:14px}
+.exp-visual{
+  background:white;border:3px solid white;border-radius:24px;overflow:hidden;
+  box-shadow:10px 10px 22px rgba(166,120,70,.12), -6px -6px 16px rgba(255,255,255,.6), inset 1px 1px 0 rgba(255,255,255,.9);
+}
+.exp-top{padding:12px 14px;background:linear-gradient(135deg, #FFF4E8, #FFDCC3);border-bottom:3px solid white;display:flex;justify-content:space-between;align-items:center}
+.exp-top strong{font-family:'Nunito',sans-serif;font-size:11px}
+.exp-body{padding:14px;text-align:left}
+.q-meta{display:flex;gap:6px;margin-bottom:8px}
+.q-meta span{font-size:11px;font-weight:800;padding:5px 8px;border-radius:999px;background:#FFF4E8;border:3px solid white;box-shadow:2px 2px 6px rgba(166,120,70,.06)}
+.q-title{font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;line-height:1.4;margin-bottom:10px}
+.q-options{display:grid;gap:7px;margin-bottom:12px}
+.q-options .opt{font-size:13px}
+.exp-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:10px;border-top:3px dashed #FFE8D1}
+.palette-mini{display:flex;gap:6px;align-items:center}
+.palette-mini b{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;font-size:11px;font-weight:900;border:3px solid white;background:white;box-shadow:3px 3px 8px rgba(166,120,70,.08)}
+.palette-mini b.on{background:var(--ink);color:white} .palette-mini b.mark{background:#FFDCC3}
+
+/* steps clay - 3 chunky vertical */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:10px}
+.step{
+  padding:18px;border-radius:26px;border:3px solid white;
+  box-shadow:10px 10px 20px rgba(166,120,70,.11), -8px -8px 16px rgba(255,255,255,.85), inset 1px 1px 0 rgba(255,255,255,.9);
+  text-align:left;position:relative;
+}
+.step:nth-child(1){background:linear-gradient(135deg, #FFF4E8, #FFE0C8);transform:rotate(-.7deg)}
+.step:nth-child(2){background:linear-gradient(135deg, #F5F0FF, #E8E0FF);transform:rotate(.6deg)}
+.step:nth-child(3){background:linear-gradient(135deg, #F0FFF0, #D6F5D6);transform:rotate(-.4deg)}
+.step-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.step-num span{width:30px;height:30px;border-radius:50%;background:var(--ink);color:white;display:grid;place-items:center;border:3px solid white;box-shadow:3px 3px 8px rgba(0,0,0,.12)}
+.step h3{font-family:'Nunito',sans-serif;font-size:18px;margin-bottom:6px}
+.step p{font-size:13.5px;color:var(--ink2);line-height:1.55;margin-bottom:12px;opacity:.85}
+.step-visual{background:rgba(255,255,255,.7);border:3px solid white;border-radius:18px;padding:12px;box-shadow:inset 1px 1px 0 rgba(255,255,255,.9), 6px 6px 14px rgba(166,120,70,.07)}
+.upload{border:3px dashed #FFD0A0;border-radius:16px;padding:14px;text-align:center;background:rgba(255,255,255,.6)}
+.upload .ico{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FFDCC3,#FFB88C);border:3px solid white;display:grid;place-items:center;margin:0 auto 6px;box-shadow:4px 4px 10px rgba(180,120,70,.12);font-weight:900}
+.mini-row{margin-top:8px;padding:8px 10px;border-radius:999px;background:white;border:3px solid white;display:flex;justify-content:space-between;font-weight:800;font-size:12px;box-shadow:4px 4px 10px rgba(166,120,70,.06)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mini-card{padding:10px;border-radius:14px;background:white;border:3px solid white;text-align:center;box-shadow:4px 4px 10px rgba(166,120,70,.06)}
+.mini-card small{font-size:9px;font-weight:900;letter-spacing:.07em;color:var(--muted)}
+.mini-card strong{font-family:'Nunito',sans-serif;font-size:16px}
+
+/* exams clay */
+.exams{
+  background:white;border:3px solid white;border-radius:28px;padding:20px;
+  box-shadow:10px 10px 22px rgba(166,120,70,.1), -8px -8px 16px rgba(255,255,255,.8), inset 1px 1px 0 rgba(255,255,255,.9);margin-top:14px;
+}
+.exams-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:end;margin-bottom:16px;text-align:left}
+.exams-head h3{font-family:'Nunito',sans-serif;font-size:28px;line-height:.92;letter-spacing:-.03em}
+.exams-head p{color:var(--muted);max-width:420px;font-size:14px;font-weight:500}
+.exam-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.exam-card{padding:14px;border-radius:20px;border:3px solid white;box-shadow:6px 6px 14px rgba(166,120,70,.08), -4px -4px 10px rgba(255,255,255,.6);transition:.2s;text-align:left}
+.exam-card:hover{transform:translateY(-3px) scale(1.02)}
+.exam-card:nth-child(1){background:linear-gradient(135deg,#FFF4E8,#FFDCC3)}
+.exam-card:nth-child(2){background:linear-gradient(135deg,#F0FFF0,#D6F5D6)}
+.exam-card:nth-child(3){background:linear-gradient(135deg,#F5F0FF,#E8E0FF)}
+.exam-card:nth-child(4){background:linear-gradient(135deg,#FFF7EB,#FFE4CC)}
+.exam-card:nth-child(5){background:linear-gradient(135deg,#F0F8FF,#D6EEFF)}
+.exam-card:nth-child(6){background:linear-gradient(135deg,#FFF0F0,#FFD6D6)}
+.exam-card:nth-child(7){background:linear-gradient(135deg,#FFF7EB,#FFEFD0)}
+.exam-card:nth-child(8){background:var(--ink);color:white;border-color:rgba(255,255,255,.12);box-shadow:8px 8px 18px rgba(46,31,20,.18)}
+.exam-card b{font-family:'Nunito',sans-serif;font-size:14px}
+.exam-card p{font-size:12.5px;margin:6px 0 8px;line-height:1.4;opacity:.85}
+.exam-card span.tag{font-size:10px;font-weight:900;padding:5px 8px;border-radius:999px;background:white;border:3px solid white;box-shadow:2px 2px 6px rgba(0,0,0,.06)}
+
+/* final clay */
+.final{max-width:1160px;margin:48px auto 0;padding:0 16px 36px}
+.final-card{
+  display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center;
+  background:linear-gradient(135deg, #FFDCC3, #FFB88C 55%, #FFD0A0 100%);border:3px solid white;border-radius:32px;padding:22px;
+  box-shadow:14px 14px 28px rgba(180,120,70,.16), -10px -10px 20px rgba(255,255,255,.7), inset 2px 2px 6px rgba(255,255,255,.6);
+  position:relative;overflow:hidden;
+}
+.final-card::after{content:"♡";position:absolute;right:18px;top:14px;font-size:28px;opacity:.25;transform:rotate(12deg)}
+.final-copy{text-align:left}
+.final-copy h2{font-family:'Nunito',sans-serif;font-size:36px;line-height:.9;letter-spacing:-.03em;margin-bottom:10px}
+.final-copy h2 em{background:linear-gradient(135deg, #7A3A2E, #2E1F14);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-copy p{font-size:14.5px;color:var(--ink2);line-height:1.6;margin-bottom:14px;opacity:.85}
+.final-actions{display:flex;gap:10px;flex-wrap:wrap}
+.final-visual{
+  background:white;border:3px solid white;border-radius:24px;padding:16px;
+  box-shadow:10px 10px 20px rgba(180,120,70,.12), -6px -6px 14px rgba(255,255,255,.6), inset 1px 1px 0 rgba(255,255,255,.9);
+}
+footer{max-width:1160px;margin:0 auto;padding:16px 16px 30px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12.5px;border-top:3px dashed #FFE8D1;margin-top:16px;font-weight:600}
+
+/* responsive */
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr}
+  .hero h1{font-size:48px}
+  .features{grid-template-columns:1fr 1fr}
+  .exam-grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr}
+  .exp-wrap{grid-template-columns:1fr}
+  .final-card{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .cbt-body{grid-template-columns:1fr}
+  .cbt-right{border-top:3px solid white}
+}
+@media(max-width:640px){
+  .hero h1{font-size:36px}
+  .features{grid-template-columns:1fr}
+  .exam-grid{grid-template-columns:1fr}
+  .section-head h2{font-size:32px}
+  .exp-copy h2{font-size:28px}
+  .final-copy h2{font-size:30px}
+}
+
+/* FAB clay */
+.fab{position:fixed;bottom:24px;right:24px;z-index:99}
+.fab summary{
+  list-style:none;width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg, #FFF4E8, #FFDCC3);color:var(--ink);
+  display:grid;place-items:center;cursor:pointer;
+  border:3px solid white;
+  box-shadow:8px 8px 16px rgba(180,120,70,.18), -6px -6px 14px rgba(255,255,255,.9), inset 2px 2px 4px rgba(255,255,255,.8);
+  font-size:22px;font-weight:900;user-select:none;transition:.2s;
+}
+.fab summary::-webkit-details-marker{display:none}
+.fab[open] summary{transform:rotate(90deg) scale(.96);background:linear-gradient(135deg, #2E1F14, #4A3320);color:white;border-color:white}
+.fab-panel{
+  position:absolute;bottom:72px;right:0;width:330px;max-height:72vh;overflow:auto;
+  background:rgba(255,247,235,.92);backdrop-filter:blur(16px);border:3px solid white;border-radius:24px;
+  box-shadow:12px 12px 28px rgba(166,120,70,.16), -8px -8px 18px rgba(255,255,255,.8), inset 1px 1px 0 rgba(255,255,255,.9);
+  padding:14px;animation:fabIn .22s ease;
+}
+@keyframes fabIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.fab-header{font-family:'Nunito',sans-serif;font-size:11px;font-weight:900;letter-spacing:.1em;color:var(--muted);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.fab-header span{font-size:10px;background:var(--ink);color:#FFDCC3;padding:5px 9px;border-radius:999px;border:2px solid white;box-shadow:3px 3px 8px rgba(0,0,0,.1)}
+.fab-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.fab-link{
+  display:block;padding:10px 11px;border-radius:16px;
+  border:3px solid white;background:white;
+  font-size:12.5px;font-weight:800;letter-spacing:-.01em;line-height:1.2;
+  box-shadow:4px 4px 10px rgba(166,120,70,.07), -2px -2px 8px rgba(255,255,255,.6);transition:.15s;
+}
+.fab-link small{display:block;font-size:10px;font-weight:700;color:var(--muted);margin-top:2px}
+.fab-link.active{background:linear-gradient(135deg, #2E1F14, #4A3320);color:white;border-color:white;box-shadow:6px 6px 14px rgba(46,31,20,.18)}
+.fab-link.active small{color:rgba(255,255,255,.7)}
+.fab-link:hover{transform:translateY(-1px)}
+
+/* Top style pill bar - 1-click switch */
+.style-bar{
+  max-width:1180px;margin:14px auto 0;padding:0 16px;
+  position:sticky;top:76px;z-index:45;
+}
+.style-bar-inner{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  padding:8px 10px;
+  background:rgba(255,253,247,.92);backdrop-filter:blur(12px) saturate(1.2);
+  border:1px solid rgba(14,20,36,.08);border-radius:999px;
+  box-shadow:0 8px 24px rgba(14,20,36,.08), 0 2px 8px rgba(14,20,36,.06);
+}
+.style-bar-inner::-webkit-scrollbar{display:none}
+.style-pill{
+  white-space:nowrap;flex-shrink:0;
+  padding:8px 14px;border-radius:999px;
+  font-size:12.5px;font-weight:800;letter-spacing:-.01em;
+  border:1px solid transparent;background:transparent;color:#5A4A32;
+  transition:.15s;line-height:1;
+}
+.style-pill.active{
+  background:#0E1424;color:#D9FF54;border-color:#0E1424;
+  box-shadow:0 4px 12px rgba(14,20,36,.15);
+}
+.style-pill:hover{background:#FFF6D5;border-color:#E8D9B0;color:#0E1424}
+@media(max-width:640px){
+  .style-bar{top:68px;margin-top:10px}
+  .style-pill{padding:7px 11px;font-size:12px}
+}
+
+/* Top full-width style bar - above everything */
+.style-bar{
+  display:none; /* hide old bar if any leftover */
+}
+.style-bar-full{
+  position:sticky;top:0;z-index:60;
+  width:100%;
+  background:rgba(255,253,247,.94);backdrop-filter:blur(14px) saturate(1.2);
+  border-bottom:1px solid rgba(14,20,36,.08);
+  box-shadow:0 4px 20px rgba(14,20,36,.06);
+  padding:10px 0;
+}
+.style-bar-inner-full{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  padding:0 16px;
+  max-width:1180px;margin:0 auto;
+  align-items:center;
+}
+.style-bar-inner-full::-webkit-scrollbar{display:none}
+.style-pill-full{
+  white-space:nowrap;flex-shrink:0;
+  padding:8px 14px;border-radius:999px;
+  font-size:12.5px;font-weight:800;letter-spacing:-.01em;
+  border:1px solid transparent;background:transparent;color:#5A4A32;
+  transition:.15s;line-height:1;
+}
+.style-pill-full.active{
+  background:#0E1424;color:#D9FF54;border-color:#0E1424;
+  box-shadow:0 4px 12px rgba(14,20,36,.15);
+}
+.style-pill-full:hover{background:#FFF6D5;border-color:#E8D9B0;color:#0E1424}
+@media(max-width:640px){
+  .style-bar-full{padding:8px 0}
+  .style-pill-full{padding:7px 11px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="style-bar-full"><div class="style-bar-inner-full">
+      <a href="index.html" class="style-pill-full">V1 SaaS</a>
+      <a href="v2-neumorphic.html" class="style-pill-full">Neumorphic</a>
+      <a href="v3-skeuomorphic.html" class="style-pill-full">Skeuomorphic</a>
+      <a href="v-glassmorphism.html" class="style-pill-full">Glassmorphism</a>
+      <a href="v-claymorphism.html" class="style-pill-full active">Claymorphism</a>
+      <a href="v-aurora.html" class="style-pill-full">Aurora</a>
+      <a href="v-metalmorphism.html" class="style-pill-full">Metalmorphism</a>
+      <a href="v-flat.html" class="style-pill-full">Flat</a>
+      <a href="v-flat2.html" class="style-pill-full">Flat 2.0</a>
+      <a href="v-material.html" class="style-pill-full">Material</a>
+      <a href="v-fluent.html" class="style-pill-full">Fluent</a>
+      <a href="v-hig.html" class="style-pill-full">HIG</a>
+      <a href="v4-neubrutalism.html" class="style-pill-full">Neubrutalism</a>
+      <a href="v-brutalist.html" class="style-pill-full">Brutalist</a>
+      <a href="v-cyberpunk.html" class="style-pill-full">Cyberpunk</a>
+      <a href="v-y2k.html" class="style-pill-full">Y2K Aero</a>
+      <a href="v-solarpunk.html" class="style-pill-full">Solarpunk</a>
+      <a href="v-bento.html" class="style-pill-full">Bento Grid</a>
+      <a href="v-minimalist.html" class="style-pill-full">Minimalist</a>
+      <a href="v-dark.html" class="style-pill-full">Dark Mode</a>
+    </div></div>
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div></div>
+
+<div class="nav-wrap">
+  <nav class="nav">
+    <div class="logo"><div class="logo-mark">◐</div><div class="logo-type">PARAKH <span>clay • soft</span></div></div>
+    <div class="nav-links"><a href="#features">Features</a><a href="#how">How it works</a><a href="#exams">Exams</a><a href="#">Pricing</a></div>
+    <div class="nav-cta">
+      <a href="#try" class="btn-clay">Squeeze a mock <span class="arrow">↗</span></a>
+    </div>
+  </nav>
+</div>
+
+
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow"><i></i> CLAYMORPHISM • SOFT • SQUISHY • REAL</div>
+    <h1>Squeeze your <span class="soft">PDF</span><br>into a <span class="clay-word">real mock.</span></h1>
+    <p class="sub">Parakh is the <strong>clay AI that squishes</strong> your PYQs, coaching scans and bloated question banks into a pillowy, palm-pressed CBT. Like NTA’s screen — but kinder, puffier, hug-ready.</p>
+    <div class="hero-actions">
+      <a href="#try" class="btn-clay btn-clay-peach" style="padding:14px 22px;font-size:15px">Upload PDF & squish it →</a>
+      <a href="#how" class="btn-clay" style="background:white;color:var(--ink);border-color:white">See how it puffs ▶</a>
+    </div>
+    <div class="trust">
+      <div class="trust-pill"><div class="avatars"><span>A</span><span>S</span><span>R</span></div> 40,000+ puff lovers</div>
+      <span class="trust-pill">♡ 2.3M Qs puffed</span>
+      <span class="trust-pill">✦ JEE • NEET • UPSC</span>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="clay pdf-clay clay-peach">
+      <div class="pdf-head"><div class="pdf-icon">📄</div><div class="pdf-meta"><strong>UPSC_2022_GS1.pdf</strong><span>16 pages • 6.8 MB • slightly crumpled</span></div><span class="pdf-badge">PDF</span></div>
+      <div class="lines w90"></div><div class="lines w80"></div><div class="lines w60"></div>
+      <div class="q-clay"><b>Q.07 &nbsp; Consider the following statements …</b><div class="lines w60" style="margin-top:8px"></div><div class="q-opt"></div><div class="q-opt fill"></div><div class="q-opt"></div></div>
+      <div class="lines w80"></div>
+    </div>
+
+    <div class="clay ai-bubble clay-lav">
+      <div class="ai-logo">✦</div>
+      <div style="flex:1;text-align:left">
+        <strong style="font-family:'Nunito',sans-serif;font-size:13px">PARAKH CLAY AI</strong><br><span style="font-size:11px;color:var(--muted);font-weight:700">Squishing • 38s • puff puff…</span>
+        <div class="ai-tags"><span class="tag peach">✓ 100 Qs</span><span class="tag mint">✓ 120 mins</span><span class="tag">+2 −0.66</span></div>
+      </div>
+      <div class="scan"><i></i></div>
+    </div>
+
+    <div class="clay cbt-monitor">
+      <div class="cbt-top"><strong>UPSC CSE — MOCK 01 • CLAY CBT</strong><span class="timer">◷ 01:52:18</span></div>
+      <div class="cbt-body">
+        <div class="cbt-left">
+          <div class="tabs"><span class="tab active">GS I</span><span class="tab">GS II</span><span class="tab">Aptitude</span></div>
+          <div class="question">Q07. With reference to Indian history, consider the statements …</div>
+          <div class="options">
+            <div class="opt"><b>A</b> 1 only</div>
+            <div class="opt sel"><b>B</b> 1 and 2 only — puffed ✓</div>
+            <div class="opt"><b>C</b> 2 and 3 only</div>
+            <div class="opt"><b>D</b> 1, 2 and 3</div>
+          </div>
+          <div class="cbt-actions"><span class="mini-btn">← Back</span><span class="mini-btn dark">Save & Next →</span></div>
+        </div>
+        <div class="cbt-right">
+          <div class="pal-head"><span>Palette</span><span style="background:white;border:3px solid white;padding:3px 7px;border-radius:999px;box-shadow:2px 2px 6px rgba(0,0,0,.06)">7 / 100</span></div>
+          <div class="palette"><span class="pal ans">1</span><span class="pal">2</span><span class="pal mark">3</span><span class="pal">4</span><span class="pal ans">5</span><span class="pal">6</span><span class="pal ans">7</span><span class="pal">8</span><span class="pal">9</span><span class="pal">10</span></div>
+          <div class="legend"><span><i class="ans"></i>Answered</span><span><i class="mark"></i>Marked</span><span><i class="not"></i>Left</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="float-clay fc1"><span class="ic">◷</span> Puffy timer, real pressure</div>
+    <div class="float-clay fc2"><span class="ic">✓</span> Clay captures negatives</div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-inner">
+    <div class="strip-label">PUFFED FOR EVERY EXAM</div>
+    <div class="exam-pills">
+      <span class="exam-pill"><b>JEE</b> • Mains & Adv</span>
+      <span class="exam-pill"><b>NEET</b> • UG</span>
+      <span class="exam-pill live">UPSC • CSE</span>
+      <span class="exam-pill">GATE</span>
+      <span class="exam-pill">UGC NET</span>
+      <span class="exam-pill">SSC • Banking</span>
+      <span class="exam-pill">CAT • CUET</span>
+      <span class="exam-pill" style="background:var(--ink);color:white;border-color:var(--ink)">Any PDF → Puff → CBT</span>
+    </div>
+  </div>
+</div>
+
+<!-- distinct order: features FIRST (unlike glass) -->
+<section class="section" id="features">
+  <div class="section-head">
+    <div class="kicker"><i></i> WHY CLAY? • SOFT BUT SERIOUS</div>
+    <h2>Puffy outside. <em>Exam-strict inside.</em></h2>
+    <p>We made the UI feel like dough — inflated, warm, friendly — so your brain saves its stress for the 180-minute timer, where it belongs.</p>
+  </div>
+  <div class="features">
+    <div class="feat"><div class="feat-icon">◫</div><h4>Finds every question</h4><p>MCQs, MSQs, NAT, comprehension sets, image Qs — even when numbering restarts per section, we puff them out cleanly.</p></div>
+    <div class="feat"><div class="feat-icon">◎</div><h4>Knows your marks</h4><p>+4 −1, +3 −0.66, part-wise, sectional cut-offs — clay remembers so you don’t have to configure anything.</p></div>
+    <div class="feat"><div class="feat-icon">⬙</div><h4>Keeps instructions</h4><p>Original instruction sheets preserved word-for-word, with soft scroll, before you puff “Start test”.</p></div>
+    <div class="feat"><div class="feat-icon">⚡</div><h4>Puffs in ~38 seconds</h4><p>Drop at 10:00, attempt by 10:01. No typing, no timer sliders — just squeeze.</p></div>
+    <div class="feat"><div class="feat-icon">▦</div><h4>Palette that squishes</h4><p>Answered, marked, not visited — all in pillowy peach, mint and lavender with keyboard haptics.</p></div>
+    <div class="feat"><div class="feat-icon">◈</div><h4>Analysis after press</h4><p>Score, accuracy, time per Q, section-wise wobble — soft cards, hard truths.</p></div>
+  </div>
+</section>
+
+<section class="experience">
+  <div class="exp-wrap">
+    <div class="exp-copy">
+      <div class="kicker"><i></i> THE HALL IS SOFT NOW</div>
+      <h2>Feels like <em>TCS iON,</em><br>but squishier.</h2>
+      <p>We kept NTA’s pressure — the ticking, the palette panic, the auto-submit — and wrapped it in clay so it’s less scary to open every day.</p>
+      <div class="points">
+        <div class="point"><i>◷</i><span><strong>Real countdown & auto-submit.</strong> When it hits 00:00, clay hardens and submits — like the centre.</span></div>
+        <div class="point"><i>▦</i><span><strong>Question palette that puffs.</strong> See answered / marked / not visited at a cozy glance.</span></div>
+        <div class="point"><i>⇄</i><span><strong>Section squish.</strong> Glide across sections, respect sectional locks if your PDF has them.</span></div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="#try" class="btn-clay" style="background:linear-gradient(135deg,#D6F5D6,#A7E8B0);color:var(--ink);border-color:white">Try clay CBT →</a>
+        <span style="font-size:13px;color:var(--muted);align-self:center;font-weight:700">No signup • puff to preview</span>
+      </div>
+    </div>
+    <div class="exp-visual">
+      <div class="exp-top"><strong>PARAKH CLAY • GATE 2024 — Mock 03</strong><span class="timer" style="font-size:11px">● 02:14:33 LEFT</span></div>
+      <div class="exp-body">
+        <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap"><span style="padding:7px 12px;border-radius:999px;background:var(--ink);color:white;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px">Aptitude • 10</span><span style="padding:7px 12px;border-radius:999px;background:white;border:3px solid white;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;box-shadow:3px 3px 8px rgba(0,0,0,.06)">Core • 55</span><span style="padding:7px 12px;border-radius:999px;background:white;border:3px solid white;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px">Maths</span></div>
+        <div class="q-meta"><span style="background:#E8E0FF">Q12 • NAT • +2 −0</span><span style="background:#D6F5D6">Virtual calc</span></div>
+        <div class="q-title">Q12. The value of ∫₀¹ x³ eˣ dx is … (NAT)</div>
+        <div class="q-options">
+          <div class="opt" style="justify-content:center;gap:10px"><span style="font-weight:800">Your answer:</span><span style="background:var(--ink);color:white;padding:6px 14px;border-radius:999px;border:3px solid white">2. 146</span></div>
+          <div class="opt" style="background:linear-gradient(135deg,#FFF4E8,#FFE0C8);justify-content:center"><span style="font-size:11px;font-weight:800;letter-spacing:.05em">⌨️ Numeric keypad • clay keys</span></div>
+        </div>
+        <div class="exp-bottom">
+          <div style="display:flex;gap:8px"><span class="mini-btn">← Prev</span><span class="mini-btn dark">Save & Next →</span></div>
+          <div class="palette-mini"><b>11</b><b class="mark">12</b><b>13</b><b class="on">14</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="section-head">
+    <div class="kicker"><i></i> PUFF → PRESS → PRACTICE</div>
+    <h2>Drop. <em>We puff.</em> You press start.</h2>
+    <p>Three inflated steps. No forms, no manual timers — just the softest path from PDF to exam hall.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01 — DROP <span>↗</span></div>
+      <h3>Drop any PDF</h3>
+      <p>PYQs, scanned coaching sheets, bloated banks — even 300-page PDFs. The clay dropzone bounces.</p>
+      <div class="step-visual"><div class="upload"><div class="ico">↑</div><strong style="font-family:'Nunito',sans-serif">Drop clay PDF here</strong><br><span style="font-size:11px;color:var(--muted);font-weight:700">up to 50MB • any scan • bounces on drop</span></div><div class="mini-row">NEET_2021.pdf <span style="background:var(--ink);color:white;padding:3px 8px;border-radius:999px;border:2px solid white">18 MB</span></div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">02 — PUFF <span>✦</span></div>
+      <h3>Clay reads & puffs</h3>
+      <p>Duration, negatives, sections, instructions — all inflated into puffy pills in under 40 seconds.</p>
+      <div class="step-visual"><div class="grid2"><div class="mini-card"><small>DURATION</small><br><strong>180 mins</strong></div><div class="mini-card"><small>MARKING</small><br><strong>+4 −1</strong></div><div class="mini-card"><small>SECTIONS</small><br><strong>3 puffs</strong></div><div class="mini-card"><small>QUESTIONS</small><br><strong>90 puffed</strong></div></div><div style="margin-top:8px;font-size:11px;font-weight:800;padding:8px 10px;border-radius:999px;background:var(--ink);color:white;text-align:center">♡ Instructions kept soft & verbatim</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">03 — PRESS <span>▶</span></div>
+      <h3>Press start, feel hall</h3>
+      <p>Lifted palette, squishy timer, mark-for-review that wobbles — real exam nerves, soft edges.</p>
+      <div class="step-visual"><div style="display:flex;justify-content:space-between;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px"><span>Q 14 / 90</span><span style="background:var(--ink);color:white;padding:5px 10px;border-radius:999px;border:2px solid white">01:42:11</span></div><div style="margin-top:8px;height:8px;background:linear-gradient(90deg,#FFDCC3,#FFB88C);border-radius:999px;width:74%;border:2px solid white"></div><div style="height:8px;background:rgba(46,31,20,.07);border-radius:999px;width:88%;margin-top:6px;border:2px solid white"></div><div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px"><span class="pal ans">1</span><span class="pal mark">2</span><span class="pal">3</span><span class="pal">4</span><span class="pal">5</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="exams">
+  <div class="exams">
+    <div class="exams-head"><h3>One clay.<br>Every exam you knead.</h3><p>From JEE’s sharp sprint to UPSC’s slow knead — if it’s a PDF, clay can puff it into a mock.</p></div>
+    <div class="exam-grid">
+      <div class="exam-card"><b>JEE Mains & Adv</b><p>PCM with NAT & paragraphs. PYQs since 2012, all squeezy shifts.</p><span class="tag">12.5L / yr • 90 Qs</span></div>
+      <div class="exam-card"><b>NEET UG</b><p>Botany-Zoology-Physics-Chemistry with +4 −1 puff.</p><span class="tag">20L / yr • 200 Qs</span></div>
+      <div class="exam-card"><b>UPSC CSE</b><p>Prelims & Mains, comprehension squish, exact sheets.</p><span class="tag">Most detailed</span></div>
+      <div class="exam-card"><b>GATE</b><p>MCQ + MSQ + NAT with puffy calculator.</p><span class="tag">30 papers • 65 Qs</span></div>
+      <div class="exam-card"><b>UGC NET / JRF</b><p>Paper 1+2 • 82 subjects, no negative, 3 hrs.</p><span class="tag">Teaching & Research</span></div>
+      <div class="exam-card"><b>SSC CGL & CHSL</b><p>Quant, reasoning, English, GK — soft sectional locks.</p><span class="tag">30L+ candidates</span></div>
+      <div class="exam-card"><b>Banking PO/SO</b><p>SBI • IBPS • speed cubbies.</p><span class="tag">English & Hindi</span></div>
+      <div class="exam-card"><b>CAT • CUET • STATE</b><p style="opacity:.8">Any PDF — state TET, PCS, private series. Puff it now.</p><span class="tag" style="background:white;color:var(--ink)">Try now →</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="final-card">
+    <div class="final-copy">
+      <h2>Ready to <em>puff your PDF</em> into a mock?</h2>
+      <p>40,000 aspirants already squish their PYQs every evening. Three mocks free — warm, inflated, exam-accurate. Come knead!</p>
+      <div class="final-actions">
+        <a href="#try" class="btn-clay" style="background:var(--ink);color:white">Upload PDF — puff free →</a>
+        <a href="#how" class="btn-clay" style="background:white;color:var(--ink)">Watch 30s puff</a>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:12px;font-size:12px;font-weight:700;flex-wrap:wrap;opacity:.7"><span>♡ No card</span><span>✓ Scanned OK</span><span>✓ ~38s to puff</span></div>
+    </div>
+    <div class="final-visual">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><strong style="font-family:'Nunito',sans-serif;font-size:11px;letter-spacing:.06em">YOUR PUFF LIBRARY</strong><span style="font-size:11px;font-weight:900;background:var(--ink);color:#FFDCC3;padding:5px 10px;border-radius:999px;border:2px solid white">3/3 FREE ♡</span></div>
+      <div style="padding:12px;border-radius:16px;background:linear-gradient(135deg, #FFF4E8, #FFDCC3);border:3px solid white;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;box-shadow:4px 4px 10px rgba(166,120,70,.08)">
+        <div><strong style="font-family:'Nunito',sans-serif;font-size:13px">UPSC GS1 2022 — Mock 01</strong><br><span style="font-size:11px;color:var(--muted);font-weight:700">Score 82/200 • puffed!</span></div><span style="font-weight:900;background:var(--ink);color:white;padding:6px 10px;border-radius:999px;border:2px solid white">Analysis →</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center">
+        <div style="padding:12px;border-radius:16px;background:linear-gradient(135deg,#FFF4E8,#FFE0C8);border:3px solid white;box-shadow:4px 4px 10px rgba(166,120,70,.06)"><b style="font-family:'Nunito',sans-serif;font-size:20px">37</b><br><span style="font-size:11px;font-weight:800;color:var(--muted)">Puffs</span></div>
+        <div style="padding:12px;border-radius:16px;background:linear-gradient(135deg,#F0FFF0,#D6F5D6);border:3px solid white;box-shadow:4px 4px 10px rgba(166,120,70,.06)"><b style="font-family:'Nunito',sans-serif;font-size:20px">214</b><br><span style="font-size:11px;font-weight:800;color:var(--muted)">Avg</span></div>
+        <div style="padding:12px;border-radius:16px;background:linear-gradient(135deg,#F5F0FF,#E8E0FF);border:3px solid white;box-shadow:4px 4px 10px rgba(166,120,70,.06)"><b style="font-family:'Nunito',sans-serif;font-size:20px">71%</b><br><span style="font-size:11px;font-weight:800;color:var(--muted)">Acc.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div><strong>PARAKH CLAY</strong> © 2026 • puffed with love in India • Privacy • Terms • hello@parakh.ai</div><div>MADE SOFT IN INDIA ♡ • 40k puffers • CLAY LIVE</div></footer>
+
+<details class="fab"><summary>◈</summary><div class="fab-panel"><div class="fab-header">SWITCH STYLE <span>19 STYLES</span></div><div class="fab-grid">
+<a href="index.html" class="fab-link">V1 SaaS <small>Premium SaaS</small></a>
+<a href="v2-neumorphic.html" class="fab-link">Neumorphic</a>
+<a href="v3-skeuomorphic.html" class="fab-link">Skeuomorphic</a>
+<a href="v-glassmorphism.html" class="fab-link">Glassmorphism</a>
+<a href="v-claymorphism.html" class="fab-link active">Claymorphism</a>
+<a href="v-aurora.html" class="fab-link">Aurora</a>
+<a href="v-metalmorphism.html" class="fab-link">Metalmorphism</a>
+<a href="v-flat.html" class="fab-link">Flat</a>
+<a href="v-flat2.html" class="fab-link">Flat 2.0</a>
+<a href="v-material.html" class="fab-link">Material</a>
+<a href="v-fluent.html" class="fab-link">Fluent</a>
+<a href="v-hig.html" class="fab-link">HIG</a>
+<a href="v4-neubrutalism.html" class="fab-link">Neubrutalism</a>
+<a href="v-brutalist.html" class="fab-link">Brutalist</a>
+<a href="v-cyberpunk.html" class="fab-link">Cyberpunk</a>
+<a href="v-y2k.html" class="fab-link">Y2K Aero</a>
+<a href="v-solarpunk.html" class="fab-link">Solarpunk</a>
+<a href="v-bento.html" class="fab-link">Bento Grid</a>
+<a href="v-minimalist.html" class="fab-link">Minimalist</a>
+<a href="v-dark.html" class="fab-link">Dark Mode</a>
+</div></div></details>
+</body>
+</html>

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parakh V3 — Skeuomorphic • Real Desk, Real Exam</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --wood:#2B1810;
+  --wood2:#3E2416;
+  --paper:#FFFBEB;
+  --paper2:#FFF7D6;
+  --cream:#FFF1C7;
+  --ink:#1A1208;
+  --muted:#7A6A54;
+  --line:#E8D9B0;
+  --brass:#C9A86A;
+  --brass-dark:#8C6A2E;
+  --green:#1B6B3A;
+  --red:#8B1E1E;
+}
+body{
+  font-family:'IBM Plex Sans',sans-serif;
+  background:
+    radial-gradient(800px 400px at 20% 0%, rgba(201,168,106,.18), transparent 70%),
+    linear-gradient(180deg, #3A2012 0%, #2B1810 100%);
+  color:var(--ink);
+  min-height:100vh;
+}
+a{color:inherit;text-decoration:none}
+.wood-grain{
+  background:
+    repeating-linear-gradient(90deg, rgba(0,0,0,.06) 0 2px, transparent 2px 18px),
+    linear-gradient(180deg, #4A2E1A 0%, #3E2416 30%, #2B1810 100%);
+  position:relative;
+}
+.wood-grain::after{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg, transparent 0 40px, rgba(255,255,255,.02) 40px 41px);
+  pointer-events:none;
+}
+/* top bar brass */
+.top-bar{
+  max-width:1180px;margin:0 auto;padding:18px 16px 0;position:relative;z-index:10;
+}
+.nav{
+  background:linear-gradient(180deg, #FFFEF7 0%, #FFF6D5 100%);
+  border-radius:18px;
+  padding:10px 12px 10px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.35),
+    0 2px 0 rgba(255,255,255,.9) inset,
+    0 -2px 6px rgba(0,0,0,.08) inset;
+  border:1px solid #E8D9B0;
+  position:relative;
+}
+.nav::before{
+  content:"";position:absolute;inset:0;border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.7) 0%, transparent 45%);pointer-events:none;
+}
+.logo{display:flex;align-items:center;gap:12px;position:relative}
+.logo-mark{
+  width:40px;height:40px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #FFD88A, #C9A86A 45%, #8C6A2E 100%);
+  border:2px solid #5A3E1A;
+  box-shadow:0 4px 10px rgba(0,0,0,.25), inset 0 2px 4px rgba(255,255,255,.6);
+  display:grid;place-items:center;font-weight:800;color:#3A2012;font-size:15px;
+}
+.logo b{font-family:'Crimson Pro',serif;font-size:20px;letter-spacing:-.02em}
+.logo span{font-size:12px;color:var(--muted);font-weight:500}
+.nav-links{display:flex;gap:20px;font-size:13px;font-weight:600;color:#5A4A32}
+.version-switch{
+  display:flex;gap:4px;padding:4px;border-radius:999px;
+  background:linear-gradient(180deg, #2B1810, #1A0F09);
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.5), 0 1px 0 rgba(255,255,255,.15);
+  border:1px solid #3A2012;
+}
+.version-switch a{
+  font-size:11px;font-weight:800;letter-spacing:.06em;padding:7px 10px;border-radius:999px;
+  color:rgba(255,255,255,.55);transition:.2s;
+}
+.version-switch a.active{
+  background:linear-gradient(180deg, #FFD88A, #C9A86A);
+  color:#2B1810;box-shadow:0 2px 8px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.7);
+  border:1px solid #E8D9B0;
+}
+.btn-brass{
+  background:linear-gradient(180deg, #FFD88A 0%, #C9A86A 50%, #A6823A 100%);
+  border:1px solid #5A3E1A;
+  padding:11px 16px;border-radius:999px;font-weight:800;font-size:13px;
+  box-shadow:0 6px 14px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.7);
+  display:inline-flex;gap:8px;align-items:center;cursor:pointer;
+}
+.btn-brass:active{transform:translateY(1px);box-shadow:0 3px 8px rgba(0,0,0,.25)}
+.btn-dark{
+  background:linear-gradient(180deg, #2B1810, #1A0F09);
+  color:#FFD88A;border:1px solid #5A3E1A;
+}
+
+/* hero desk */
+.hero{
+  max-width:1180px;margin:22px auto 0;padding:0 16px;
+  display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center;
+  position:relative;z-index:2;
+}
+.hero-copy{
+  background:linear-gradient(180deg, #FFFEF7 0%, #FFF6D5 100%);
+  border-radius:28px;padding:28px;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.4),
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 -3px 12px rgba(0,0,0,.08) inset;
+  border:1px solid #E8D9B0;
+  position:relative;
+}
+.hero-copy::before{
+  content:"";position:absolute;inset:0;border-radius:28px;
+  background:linear-gradient(180deg, rgba(255,255,255,.6), transparent 40%);pointer-events:none;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(180deg, #2B1810, #1A0F09);
+  color:#FFD88A;padding:7px 12px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.15), 0 4px 12px rgba(0,0,0,.25);
+  margin-bottom:14px;border:1px solid #5A3E1A;
+}
+.hero h1{
+  font-family:'Crimson Pro',serif;
+  font-size:64px;line-height:.9;letter-spacing:-.04em;font-weight:700;margin-bottom:12px;color:#1A1208;
+}
+.hero h1 em{font-weight:400;font-style:italic;color:#6B4A1E}
+.hero h1 i{
+  font-style:normal;background:linear-gradient(180deg, #FFD88A, #C9A86A);
+  padding:2px 10px;border-radius:8px;border:1px solid #8C6A2E;
+  box-shadow:0 4px 12px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.6);
+}
+.hero p.sub{color:#5A4A32;font-size:15px;line-height:1.6;margin-bottom:16px}
+.hero p.sub strong{color:#1A1208}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.meta{font-size:12px;color:#7A6A54;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.avatars{display:flex}
+.avatars span{width:28px;height:28px;border-radius:50%;border:2px solid #FFF6D5;margin-left:-8px;display:grid;place-items:center;font-size:11px;font-weight:800;color:white;box-shadow:0 3px 8px rgba(0,0,0,.2)}
+.avatars span:first-child{margin-left:0;background:radial-gradient(circle at 30% 30%, #FF8A8A, #B91C1C)}
+.avatars span:nth-child(2){background:radial-gradient(circle at 30% 30%, #FFD88A, #B45309)}
+.avatars span:nth-child(3){background:radial-gradient(circle at 30% 30%, #86EFAC, #15803D)}
+
+/* desk visual */
+.desk{
+  position:relative;padding:18px 0;
+}
+.paper-stack{
+  position:relative;
+}
+.paper{
+  background:
+    repeating-linear-gradient(0deg, transparent 0 27px, rgba(0,0,0,.04) 27px 28px),
+    linear-gradient(180deg, #FFFEF7 0%, #FFF8DC 100%);
+  border-radius:16px;
+  border:1px solid #E8D9B0;
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.35),
+    0 1px 0 rgba(255,255,255,.9) inset;
+  position:relative;
+}
+.paper::before{
+  content:"";position:absolute;left:18px;top:0;bottom:0;width:1px;background:rgba(201,168,106,.35);
+}
+.pdf-paper{padding:16px 16px 14px 26px;width:82%;transform:rotate(-1deg);z-index:1}
+.pdf-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed #E8D9B0}
+.pdf-icon{width:36px;height:36px;border-radius:8px;background:linear-gradient(180deg, #FFE4E6, #FECACA);border:1px solid #FCA5A5;display:grid;place-items:center;box-shadow:0 3px 8px rgba(0,0,0,.12)}
+.pdf-meta strong{font-size:13px}
+.pdf-meta span{font-size:11px;color:#7A6A54}
+.stamp{font-size:10px;font-weight:800;padding:4px 8px;border-radius:6px;background:linear-gradient(180deg, #1A1208, #2B1810);color:#FFD88A;border:1px solid #5A3E1A;transform:rotate(2deg)}
+.rule{height:1px;background:rgba(0,0,0,.06);margin:7px 0}
+.rule.w80{width:80%}.w60{width:60%}.w90{width:90%}
+.qbox{margin:10px 0;padding:10px 10px 10px 22px;border:1px solid #E8D9B0;border-radius:10px;background:rgba(255,247,214,.7);position:relative}
+.qbox::before{content:"";position:absolute;left:8px;top:10px;bottom:10px;width:2px;background:#C9A86A;border-radius:999px}
+.qbox b{font-size:12px}
+.qopt{height:7px;background:white;border:1px solid #E8D9B0;border-radius:999px;margin-top:6px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.qopt.fill{background:linear-gradient(180deg, #FFFBEB, #FFF1C7);border-color:#E8D9B0}
+
+.ai-ledger{
+  position:absolute;left:52%;top:48%;transform:translate(-50%,-50%) rotate(2deg);
+  width:240px;padding:14px;z-index:3;
+  background:linear-gradient(180deg, #1A1208 0%, #2B1810 100%);
+  border-radius:14px;border:1px solid #5A3E1A;
+  box-shadow:0 16px 32px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.15);
+  color:#FFD88A;
+}
+.ledger-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(201,168,106,.2)}
+.ledger-logo{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 30% 30%, #FFD88A, #C9A86A);border:1px solid #FFD88A;display:grid;place-items:center;color:#2B1810;font-weight:800}
+.ledger-scan{height:4px;background:rgba(201,168,106,.15);border-radius:999px;overflow:hidden;margin-bottom:10px;border:1px solid rgba(201,168,106,.15)}
+.ledger-scan i{display:block;height:100%;width:44%;background:linear-gradient(90deg, #FFD88A, #FFF1C7);animation:slide 1.6s ease-in-out infinite}
+.ledger-tags{display:flex;flex-wrap:wrap;gap:6px}
+.ledger-tag{font-size:11px;font-weight:700;padding:5px 8px;border-radius:6px;background:rgba(201,168,106,.12);border:1px solid rgba(201,168,106,.25);color:#FFD88A}
+.ledger-tag.lime{background:linear-gradient(180deg, #FFD88A, #C9A86A);color:#1A1208;border-color:#FFD88A}
+@keyframes slide{0%{transform:translateX(-90%)}50%{transform:translateX(190%)}100%{transform:translateX(-90%)}}
+
+.cbt-monitor{
+  width:96%;margin-left:auto;margin-top:-20px;transform:rotate(.7deg);z-index:2;padding:0;overflow:hidden;
+  background:linear-gradient(180deg, #0F0F0F 0%, #1A1A1A 100%);
+  border-radius:16px;border:2px solid #2A2A2A;
+  box-shadow:0 20px 50px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.monitor-bezel{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 12px;background:linear-gradient(180deg, #2A2A2A, #1A1A1A);
+  border-bottom:1px solid #333;color:#9CA3AF;font-size:11px;font-weight:700;letter-spacing:.06em;
+}
+.monitor-screen{
+  background:linear-gradient(180deg, #FFFEF7, #FFF8DC);
+  margin:8px;border-radius:10px;overflow:hidden;border:1px solid #E8D9B0;
+  box-shadow:inset 0 2px 8px rgba(0,0,0,.08);
+}
+.screen-top{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid #E8D9B0;background:rgba(255,247,214,.6)}
+.screen-title{font-size:10px;font-weight:800;letter-spacing:.06em;color:#5A4A32}
+.timer{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  background:linear-gradient(180deg, #1A1208, #2B1810);color:#FFD88A;
+  padding:6px 10px;border-radius:999px;border:1px solid #5A3E1A;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.15), 0 4px 10px rgba(0,0,0,.25);
+}
+.screen-body{display:grid;grid-template-columns:1.4fr .85fr}
+.screen-left{padding:12px;border-right:1px solid #E8D9B0}
+.tabs{display:flex;gap:6px;margin-bottom:8px}
+.tab{font-size:11px;font-weight:700;padding:6px 9px;border-radius:6px;border:1px solid #E8D9B0;background:white;color:#7A6A54}
+.tab.active{background:linear-gradient(180deg, #1A1208, #2B1810);color:#FFD88A;border-color:#1A1208}
+.question{font-size:13px;font-weight:700;line-height:1.4;margin-bottom:8px}
+.options{display:grid;gap:6px;margin-bottom:10px}
+.opt{padding:8px 10px;border-radius:8px;border:1px solid #E8D9B0;background:white;display:flex;gap:8px;align-items:center;font-size:13px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.opt.sel{background:linear-gradient(180deg, #1A1208, #2B1810);color:#FFD88A;border-color:#1A1208;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.opt b{width:22px;height:22px;border-radius:50%;border:1px solid #E8D9B0;display:grid;place-items:center;font-size:11px;background:linear-gradient(180deg, white, #FFF6D5)}
+.opt.sel b{background:linear-gradient(180deg, #FFD88A, #C9A86A);color:#1A1208;border-color:#FFD88A}
+.mini-actions{display:flex;gap:6px}
+.mini-btn{flex:1;padding:7px;border-radius:999px;border:1px solid #E8D9B0;background:linear-gradient(180deg, white, #FFF6D5);font-weight:700;font-size:11px;box-shadow:0 2px 6px rgba(0,0,0,.06);text-align:center}
+.mini-btn.dark{background:linear-gradient(180deg, #1A1208, #2B1810);color:#FFD88A;border-color:#1A1208}
+.screen-right{padding:12px;background:rgba(255,247,214,.4)}
+.pal-head{display:flex;justify-content:space-between;font-size:11px;font-weight:800;margin-bottom:6px}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:8px}
+.pal{height:26px;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:700;background:white;border:1px solid #E8D9B0;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.pal.ans{background:linear-gradient(180deg, #1A1208, #2B1810);color:#FFD88A;border-color:#1A1208}
+.pal.mark{background:linear-gradient(180deg, #FFD88A, #C9A86A);color:#1A1208;border-color:#8C6A2E}
+.sticky-note{
+  position:absolute;padding:8px 10px;border-radius:8px;font-size:11px;font-weight:700;
+  box-shadow:0 8px 16px rgba(0,0,0,.2);border:1px solid rgba(0,0,0,.08);z-index:4;transform:rotate(1deg);
+}
+.note1{top:-6px;right:8px;background:linear-gradient(180deg, #FFF9B0, #FFF176);color:#5A4A32}
+.note2{bottom:10px;left:-6px;background:linear-gradient(180deg, #DCFCE7, #86EFAC);color:#14532D;transform:rotate(-1.5deg)}
+
+/* sections on paper */
+.section{max-width:1180px;margin:0 auto;padding:40px 16px 0;position:relative;z-index:2}
+.paper-section{
+  background:linear-gradient(180deg, #FFFEF7 0%, #FFF8DC 100%);
+  border-radius:24px;padding:28px;
+  box-shadow:0 16px 40px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.9) inset;
+  border:1px solid #E8D9B0;
+}
+.section-head{text-align:center;max-width:640px;margin:0 auto 22px}
+.kicker{font-size:11px;font-weight:800;letter-spacing:.12em;color:#8C6A2E;background:linear-gradient(180deg, #FFF1C7, #FFE9A8);padding:6px 12px;border-radius:999px;border:1px solid #E8D9B0;display:inline-flex;gap:8px;align-items:center;margin-bottom:10px}
+.section-head h2{font-family:'Crimson Pro',serif;font-size:40px;line-height:.95;letter-spacing:-.03em;margin-bottom:8px}
+.section-head h2 em{font-style:italic;font-weight:400;color:#6B4A1E}
+.section-head p{color:#7A6A54;font-size:14px;line-height:1.6}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.step{padding:16px;border-radius:16px;background:linear-gradient(180deg, white, #FFFBEB);border:1px solid #E8D9B0;box-shadow:0 8px 20px rgba(0,0,0,.08), inset 0 1px 0 white}
+.step-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#8C6A2E;display:flex;justify-content:space-between;margin-bottom:8px}
+.step-num span{width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg, #1A1208, #2B1810);color:#FFD88A;display:grid;place-items:center;border:1px solid #5A3E1A;box-shadow:0 3px 8px rgba(0,0,0,.2)}
+.step h3{font-family:'Crimson Pro',serif;font-size:18px;margin-bottom:4px}
+.step p{font-size:13px;color:#7A6A54;line-height:1.5;margin-bottom:10px}
+.step-visual{padding:10px;border-radius:12px;background:repeating-linear-gradient(0deg, transparent 0 24px, rgba(0,0,0,.03) 24px 25px), linear-gradient(180deg, #FFFEF7, #FFF6D5);border:1px solid #E8D9B0}
+.upload{border:1.5px dashed #C9A86A;background:rgba(255,255,255,.6);border-radius:12px;padding:12px;text-align:center}
+.upload .ico{width:34px;height:34px;border-radius:50%;background:linear-gradient(180deg, #FFD88A, #C9A86A);border:1px solid #8C6A2E;display:grid;place-items:center;margin:0 auto 6px;box-shadow:0 3px 8px rgba(0,0,0,.15)}
+.mini-row{margin-top:6px;padding:7px 9px;border-radius:999px;background:white;border:1px solid #E8D9B0;display:flex;justify-content:space-between;font-size:12px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mini-card{padding:8px;border-radius:10px;background:white;border:1px solid #E8D9B0;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.mini-card small{font-size:9px;font-weight:800;letter-spacing:.07em;color:#8C6A2E}
+
+.wood-panel{
+  margin-top:18px;
+  background:linear-gradient(180deg, #1A1208, #2B1810);
+  border-radius:22px;padding:18px;
+  border:1px solid #5A3E1A;
+  box-shadow:0 16px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.08);
+  display:grid;grid-template-columns:1.05fr 1.3fr;gap:18px;align-items:center;
+  color:#FFD88A;
+}
+.wood-panel h2{font-family:'Crimson Pro',serif;font-size:36px;line-height:.95;margin-bottom:8px}
+.wood-panel h2 em{font-style:italic;color:#FFD88A}
+.wood-panel p{color:#D9C7A0;font-size:13px;line-height:1.6;margin-bottom:10px}
+.point{display:flex;gap:10px;margin-bottom:8px;font-size:13px;color:#FFE9A8}
+.point i{width:28px;height:28px;border-radius:50%;background:linear-gradient(180deg, #FFD88A, #C9A86A);color:#1A1208;display:grid;place-items:center;flex-shrink:0;border:1px solid #FFD88A}
+.monitor-wrap{border-radius:16px;overflow:hidden;border:2px solid #3A2A14;box-shadow:0 16px 32px rgba(0,0,0,.5)}
+
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.feat{padding:16px;border-radius:16px;background:linear-gradient(180deg, white, #FFFBEB);border:1px solid #E8D9B0;box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.feat-icon{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;margin-bottom:8px;border:1px solid #E8D9B0;box-shadow:0 3px 8px rgba(0,0,0,.08)}
+.feat h4{font-size:14px;margin-bottom:4px}
+.feat p{font-size:12px;color:#7A6A54;line-height:1.5}
+
+.exam-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.exam-card{padding:14px;border-radius:14px;background:linear-gradient(180deg, white, #FFFBEB);border:1px solid #E8D9B0;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.exam-card b{font-size:13px}
+.exam-card p{font-size:11px;color:#7A6A54;margin:4px 0 6px}
+.exam-card span.tag{font-size:10px;font-weight:800;padding:4px 7px;border-radius:999px;background:linear-gradient(180deg, #FFF1C7, #FFE9A8);border:1px solid #E8D9B0}
+
+.final{
+  max-width:1180px;margin:32px auto 0;padding:0 16px 30px;position:relative;z-index:2;
+}
+.final-card{
+  display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center;
+  padding:22px;border-radius:22px;
+  background:linear-gradient(180deg, #1A1208, #2B1810);
+  border:1px solid #5A3E1A;box-shadow:0 16px 40px rgba(0,0,0,.45);
+  color:#FFD88A;
+}
+.final-visual{background:linear-gradient(180deg, #FFFEF7, #FFF8DC);border-radius:16px;padding:14px;border:1px solid #E8D9B0;color:#1A1208}
+
+footer{max-width:1180px;margin:0 auto;padding:14px 16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:#D9C7A0;font-size:11px;border-top:1px solid rgba(201,168,106,.2);margin-top:18px;position:relative;z-index:2}
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr}
+  .hero h1{font-size:48px}
+  .steps{grid-template-columns:1fr}
+  .wood-panel{grid-template-columns:1fr}
+  .features{grid-template-columns:1fr 1fr}
+  .exam-grid{grid-template-columns:1fr 1fr}
+  .final-card{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .screen-body{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .features{grid-template-columns:1fr}
+  .exam-grid{grid-template-columns:1fr}
+  .pdf-paper{width:96%}
+  .cbt-monitor{width:100%}
+}
+
+/* FAB */
+.fab{position:fixed;bottom:24px;right:24px;z-index:99}
+.fab summary{list-style:none;width:58px;height:58px;border-radius:50%;background:#0E1424;color:#D9FF54;display:grid;place-items:center;cursor:pointer;border:2px solid rgba(255,255,255,.12);box-shadow:0 12px 32px rgba(0,0,0,.28);font-size:22px;font-weight:800;transition:.2s}
+.fab summary::-webkit-details-marker{display:none}
+.fab[open] summary{transform:rotate(45deg)}
+.fab-panel{position:absolute;bottom:72px;right:0;width:320px;max-height:72vh;overflow:auto;background:rgba(255,253,247,.98);backdrop-filter:blur(16px);border:1px solid #E8E0D1;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.18);padding:14px;animation:fabIn .22s ease}
+@keyframes fabIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fab-header{font-size:11px;font-weight:800;letter-spacing:.1em;color:#6E738A;margin-bottom:10px;display:flex;justify-content:space-between}
+.fab-header span{font-size:10px;background:#0E1424;color:#D9FF54;padding:4px 8px;border-radius:999px}
+.fab-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.fab-link{display:block;padding:9px 10px;border-radius:12px;border:1px solid #E8E0D1;background:white;font-size:12px;font-weight:700;line-height:1.2}
+.fab-link small{display:block;font-size:10px;color:#6E738A}
+.fab-link.active{background:#0E1424;color:white;border-color:#0E1424}
+.fab-link.active small{color:rgba(255,255,255,.7)}
+
+/* Top style pill bar - 1-click switch */
+.style-bar{
+  max-width:1180px;margin:14px auto 0;padding:0 16px;
+  position:sticky;top:76px;z-index:45;
+}
+.style-bar-inner{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  padding:8px 10px;
+  background:rgba(255,253,247,.92);backdrop-filter:blur(12px) saturate(1.2);
+  border:1px solid rgba(14,20,36,.08);border-radius:999px;
+  box-shadow:0 8px 24px rgba(14,20,36,.08), 0 2px 8px rgba(14,20,36,.06);
+}
+.style-bar-inner::-webkit-scrollbar{display:none}
+.style-pill{
+  white-space:nowrap;flex-shrink:0;
+  padding:8px 14px;border-radius:999px;
+  font-size:12.5px;font-weight:800;letter-spacing:-.01em;
+  border:1px solid transparent;background:transparent;color:#5A4A32;
+  transition:.15s;line-height:1;
+}
+.style-pill.active{
+  background:#0E1424;color:#D9FF54;border-color:#0E1424;
+  box-shadow:0 4px 12px rgba(14,20,36,.15);
+}
+.style-pill:hover{background:#FFF6D5;border-color:#E8D9B0;color:#0E1424}
+@media(max-width:640px){
+  .style-bar{top:68px;margin-top:10px}
+  .style-pill{padding:7px 11px;font-size:12px}
+}
+
+/* Top full-width style bar - above everything */
+.style-bar{
+  display:none; /* hide old bar if any leftover */
+}
+.style-bar-full{
+  position:sticky;top:0;z-index:60;
+  width:100%;
+  background:rgba(255,253,247,.94);backdrop-filter:blur(14px) saturate(1.2);
+  border-bottom:1px solid rgba(14,20,36,.08);
+  box-shadow:0 4px 20px rgba(14,20,36,.06);
+  padding:10px 0;
+}
+.style-bar-inner-full{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  padding:0 16px;
+  max-width:1180px;margin:0 auto;
+  align-items:center;
+}
+.style-bar-inner-full::-webkit-scrollbar{display:none}
+.style-pill-full{
+  white-space:nowrap;flex-shrink:0;
+  padding:8px 14px;border-radius:999px;
+  font-size:12.5px;font-weight:800;letter-spacing:-.01em;
+  border:1px solid transparent;background:transparent;color:#5A4A32;
+  transition:.15s;line-height:1;
+}
+.style-pill-full.active{
+  background:#0E1424;color:#D9FF54;border-color:#0E1424;
+  box-shadow:0 4px 12px rgba(14,20,36,.15);
+}
+.style-pill-full:hover{background:#FFF6D5;border-color:#E8D9B0;color:#0E1424}
+@media(max-width:640px){
+  .style-bar-full{padding:8px 0}
+  .style-pill-full{padding:7px 11px;font-size:12px}
+}
+</style>
+</head>
+<body class="wood-grain">
+<div class="style-bar-full"><div class="style-bar-inner-full">
+      <a href="index.html" class="style-pill-full">V1 SaaS</a>
+      <a href="v2-neumorphic.html" class="style-pill-full">Neumorphic</a>
+      <a href="v3-skeuomorphic.html" class="style-pill-full active">Skeuomorphic</a>
+      <a href="v-glassmorphism.html" class="style-pill-full">Glassmorphism</a>
+      <a href="v-claymorphism.html" class="style-pill-full">Claymorphism</a>
+      <a href="v-aurora.html" class="style-pill-full">Aurora</a>
+      <a href="v-metalmorphism.html" class="style-pill-full">Metalmorphism</a>
+      <a href="v-flat.html" class="style-pill-full">Flat</a>
+      <a href="v-flat2.html" class="style-pill-full">Flat 2.0</a>
+      <a href="v-material.html" class="style-pill-full">Material</a>
+      <a href="v-fluent.html" class="style-pill-full">Fluent</a>
+      <a href="v-hig.html" class="style-pill-full">HIG</a>
+      <a href="v4-neubrutalism.html" class="style-pill-full">Neubrutalism</a>
+      <a href="v-brutalist.html" class="style-pill-full">Brutalist</a>
+      <a href="v-cyberpunk.html" class="style-pill-full">Cyberpunk</a>
+      <a href="v-y2k.html" class="style-pill-full">Y2K Aero</a>
+      <a href="v-solarpunk.html" class="style-pill-full">Solarpunk</a>
+      <a href="v-bento.html" class="style-pill-full">Bento Grid</a>
+      <a href="v-minimalist.html" class="style-pill-full">Minimalist</a>
+      <a href="v-dark.html" class="style-pill-full">Dark Mode</a>
+    </div></div>
+<div class="top-bar">
+  <nav class="nav">
+    <div class="logo"><div class="logo-mark">◐</div><div><b>PARAKH</b> <span>— real desk</span></div></div>
+    <div class="nav-links"><a href="#">How it works</a><a href="#">CBT</a><a href="#">Exams</a></div>
+    <div style="display:flex;gap:10px;align-items:center;position:relative">
+      <div class="version-switch"><a href="index.html">V1 SaaS</a><a href="v2-neumorphic.html">V2 Soft</a><a href="v3-skeuomorphic.html" class="active">V3 Real</a><a href="v4-neubrutalism.html">V4 Pop</a></div>
+      <a href="#" class="btn-brass">Create Mock →</a>
+    </div>
+  </nav>
+</div>
+
+
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">★ SKEUOMORPHIC EDITION • Wood • Paper • Brass</div>
+    <h1>Turn any<br><em>PDF into a</em><br><i>real exam.</i></h1>
+    <p class="sub">Not a flat app — a real desk. Your PDF lands like paper, Parakh’s brass-stamped AI reads it, and the monitor on the desk becomes your <strong>TCS iON-style CBT</strong>.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-brass">Upload PDF & Create Mock →</a>
+      <a href="#" class="btn-brass btn-dark">See how it works ▶</a>
+    </div>
+    <div class="meta"><div class="avatars"><span>A</span><span>S</span><span>R</span></div><span><b style="color:#1A1208">40,000+ aspirants</b> practice like it’s the centre</span></div>
+  </div>
+  <div class="desk">
+    <div class="paper pdf-paper paper">
+      <div class="pdf-head"><div class="pdf-icon">📄</div><div class="pdf-meta"><strong>JEE_Main_2023_Shift1.pdf</strong><span>18 pages • 6.2 MB • cotton paper</span></div><span class="stamp">PDF</span></div>
+      <div class="rule w90"></div><div class="rule w80"></div><div class="rule w60"></div>
+      <div class="qbox"><b>Q.14 &nbsp; System of equations …</b><div class="rule w60"></div><div class="qopt"></div><div class="qopt fill"></div><div class="qopt"></div></div>
+      <div class="rule w80"></div><div class="rule w60"></div>
+    </div>
+    <div class="ai-ledger">
+      <div class="ledger-head"><div class="ledger-logo">✦</div><div><strong style="font-size:13px">PARAKH AI</strong><br><span style="font-size:11px;opacity:.7">Reading ledger… 42s</span></div></div>
+      <div class="ledger-scan"><i></i></div>
+      <div class="ledger-tags"><span class="ledger-tag lime">✓ 90 Questions</span><span class="ledger-tag">180 mins</span><span class="ledger-tag">+4 −1</span><span class="ledger-tag">3 Sections</span></div>
+    </div>
+    <div class="cbt-monitor">
+      <div class="monitor-bezel"><span>● ● ● &nbsp; PARAKH CRT — 02:47:12</span><span style="color:#FFD88A">● REC</span></div>
+      <div class="monitor-screen">
+        <div class="screen-top"><span class="screen-title">JEE MAIN — MOCK 01 • CBT MODE</span><span class="timer">● 02:47:12 left</span></div>
+        <div class="screen-body">
+          <div class="screen-left">
+            <div class="tabs"><span class="tab active">Physics</span><span class="tab">Chemistry</span><span class="tab">Maths</span></div>
+            <div class="question">Q14. If α and β are roots of x² − 6x + 4 = 0, then α³ + β³ = ?</div>
+            <div class="options">
+              <div class="opt"><b>A</b>144</div>
+              <div class="opt sel"><b>B</b>136 — Selected</div>
+              <div class="opt"><b>C</b>128</div>
+              <div class="opt"><b>D</b>120</div>
+            </div>
+            <div class="mini-actions"><span class="mini-btn">← Previous</span><span class="mini-btn dark">Save & Next →</span></div>
+          </div>
+          <div class="screen-right">
+            <div class="pal-head"><span>Palette</span><span>14 / 90</span></div>
+            <div class="palette"><span class="pal ans">1</span><span class="pal ans">2</span><span class="pal">3</span><span class="pal mark">4</span><span class="pal">5</span><span class="pal">6</span><span class="pal ans">7</span><span class="pal">8</span><span class="pal ans" style="background:linear-gradient(180deg,#FFD88A,#C9A86A)">14</span><span class="pal">10</span></div>
+            <div style="font-size:10px;font-weight:700;color:#7A6A54">● Answered &nbsp; ● Marked</div>
+          </div>
+        </div>
+      </div>
+      <div style="height:14px;background:linear-gradient(180deg, #1A1A1A, #0F0F0F);display:flex;justify-content:center;align-items:center;gap:6px"><span style="width:40px;height:4px;background:#333;border-radius:999px"></span></div>
+    </div>
+    <div class="sticky-note note1">✎ Auto-submits at 00:00</div>
+    <div class="sticky-note note2">✓ 1/4 negative detected</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="paper-section">
+    <div class="section-head"><div class="kicker">◆ PAPER → LEDGER → MONITOR</div><h2>Upload. <em>We emboss.</em><br>You attempt on desk.</h2><p>Every texture is tactile — paper grain, brass rivets, CRT glow. It feels like an exam hall, not a website.</p></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">01 / PLACE <span>↗</span></div><h3>Place paper on desk</h3><p>Drop any PDF — the wood desk accepts it like real paper. Up to 300 pages, even scanned.</p><div class="step-visual"><div class="upload"><div class="ico">↑</div><strong>Drop PDF on desk</strong><br><span style="font-size:11px;color:#7A6A54">or click to browse • 50MB</span></div><div class="mini-row">UPSC_2022.pdf <span style="background:linear-gradient(180deg,#FFD88A,#C9A86A);padding:2px 7px;border-radius:999px;font-size:11px;border:1px solid #8C6A2E">12.4 MB</span></div></div></div>
+      <div class="step"><div class="step-num">02 / LEDGER <span>✦</span></div><h3>Brass ledger reads</h3><p>Our AI ledger stamps duration, negatives, sections — like a hall invigilator checking your paper.</p><div class="step-visual"><div class="grid2"><div class="mini-card"><small>DURATION</small><br><strong>180 mins</strong></div><div class="mini-card"><small>MARKING</small><br><strong>+4 −1</strong></div><div class="mini-card"><small>SECTIONS</small><br><strong>3 found</strong></div><div class="mini-card"><small>QUESTIONS</small><br><strong>90 parsed</strong></div></div></div></div>
+      <div class="step"><div class="step-num">03 / ATTEMPT <span>▶</span></div><h3>Monitor becomes exam</h3><p>The desk monitor glows — palette, timer, mark-for-review, exactly like NTA’s hall.</p><div class="step-visual" style="padding:0;overflow:hidden"><div style="display:flex;justify-content:space-between;padding:10px 12px;font-size:11px;font-weight:800;border-bottom:1px solid #E8D9B0"><span>Q 14 / 90</span><span style="background:#1A1208;color:#FFD88A;padding:4px 8px;border-radius:999px">01:42:11</span></div><div style="padding:12px"><div class="rule w90"></div><div class="rule w70"></div><div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px"><span class="pal ans">1</span><span class="pal mark">2</span><span class="pal">3</span><span class="pal">4</span><span class="pal">5</span></div></div></div></div>
+    </div>
+    <div class="wood-panel">
+      <div>
+        <div class="kicker" style="background:rgba(201,168,106,.15);color:#FFD88A;border-color:rgba(201,168,106,.3)">◆ THE HALL FEELING</div>
+        <h2>Feels like hall.<br><em>Not an app.</em></h2>
+        <p>Students said flat quizzes don’t build temperament. So we built wood, paper and brass — so your brain thinks it’s the real centre.</p>
+        <div class="point"><i>◷</i><span><strong>CRT countdown & auto-submit.</strong> When the clock hits zero, the monitor locks — just like hall.</span></div>
+        <div class="point"><i>▦</i><span><strong>Brass palette.</strong> Ivory = not visited, ink = answered, brass = marked.</span></div>
+        <div style="display:flex;gap:10px;margin-top:12px"><a href="#" class="btn-brass">Try desk demo →</a><span style="font-size:12px;opacity:.7;align-self:center">No signup</span></div>
+      </div>
+      <div class="monitor-wrap">
+        <div class="monitor-bezel"><span>PARAKH • JEE 2023 — Mock 01</span><span style="color:#FFD88A">● 02:14:33 LEFT</span></div>
+        <div class="monitor-screen" style="margin:6px">
+          <div style="padding:12px">
+            <div style="display:flex;gap:6px;margin-bottom:8px"><span class="tab active">Physics • 30</span><span class="tab">Chemistry</span><span class="tab">Maths</span></div>
+            <div style="font-size:11px;font-weight:700;color:#7A6A54;margin-bottom:4px">Q14 • +4 −1 • Marked for review</div>
+            <div class="question">Q14. A particle moves with r = 3t² î + (4t − t²) ĵ. Magnitude of acceleration at t=1s is:</div>
+            <div class="options"><div class="opt"><b>A</b>6 m/s²</div><div class="opt sel"><b>C</b>√40 m/s² — Your answer</div><div class="opt"><b>D</b>8 m/s²</div></div>
+            <div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;gap:6px"><span class="mini-btn">← Prev</span><span class="mini-btn dark">Save & Next →</span></div><div class="palette" style="margin:0"><span class="pal ans">13</span><span class="pal mark">14</span><span class="pal">15</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="features">
+      <div class="feat"><div class="feat-icon" style="background:linear-gradient(180deg, #FFF1C7, #FFE9A8)">◫</div><h4>Question extraction</h4><p>MCQs, MSQs, NAT, image questions — lifted from paper grain correctly.</p></div>
+      <div class="feat"><div class="feat-icon" style="background:linear-gradient(180deg, #DCFCE7, #86EFAC)">◎</div><h4>Marks & negatives</h4><p>+4 −1, sectional cut-offs auto-stamped by ledger.</p></div>
+      <div class="feat"><div class="feat-icon" style="background:linear-gradient(180deg, #E0E7FF, #C7D2FE)">⬙</div><h4>Instructions verbatim</h4><p>Original instruction sheet placed on desk before start.</p></div>
+      <div class="feat"><div class="feat-icon" style="background:linear-gradient(180deg, #FFE4E6, #FECACA)">⚡</div><h4>Ready in 40s</h4><p>Paper to monitor in under a minute — no typing.</p></div>
+      <div class="feat"><div class="feat-icon" style="background:linear-gradient(180deg, #FEF3C7, #FDE68A)">▦</div><h4>True palette</h4><p>Brass pins on paper — answered / marked / not visited.</p></div>
+      <div class="feat"><div class="feat-icon" style="background:linear-gradient(180deg, #E0F2FE, #BAE6FD)">◈</div><h4>Analysis</h4><p>Desk report card: score, accuracy, time per question.</p></div>
+    </div>
+    <div style="margin-top:16px;padding:18px;border-radius:16px;background:linear-gradient(180deg, #1A1208, #2B1810);color:#FFD88A;border:1px solid #5A3E1A">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:12px"><h3 style="font-family:'Crimson Pro',serif;font-size:26px">One desk. Every exam.</h3><p style="color:#D9C7A0;max-width:360px;font-size:13px">If your exam has a PDF, we can place it on the desk — JEE to State PCS.</p></div>
+      <div class="exam-grid">
+        <div class="exam-card"><b>JEE Mains</b><p>90 Qs • 180m • 12.5L/yr</p><span class="tag">Physics/Chem/Maths</span></div>
+        <div class="exam-card"><b>NEET UG</b><p>200 Qs • 200m • 20L/yr</p><span class="tag">Botany/Zoology</span></div>
+        <div class="exam-card"><b>UPSC CSE</b><p>GS • CSAT • Detailed</p><span class="tag">Most detailed</span></div>
+        <div class="exam-card"><b>GATE</b><p>65 Qs • 30 papers</p><span class="tag">All branches</span></div>
+        <div class="exam-card"><b>UGC NET</b><p>Paper 1+2 • 82 subjects</p><span class="tag">No negative</span></div>
+        <div class="exam-card"><b>SSC CGL</b><p>100 Qs • 60m • 30L+</p><span class="tag">Quant/GK</span></div>
+        <div class="exam-card"><b>Banking</b><p>SBI/IBPS • sectional</p><span class="tag">English/Hindi</span></div>
+        <div class="exam-card" style="background:linear-gradient(180deg, #FFD88A, #C9A86A);color:#1A1208;border-color:#8C6A2E"><b>CAT • CUET • State</b><p style="color:#5A3E1A">Any PDF — try now.</p><span class="tag" style="background:#1A1208;color:#FFD88A">Try →</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="final-card">
+    <div>
+      <h2 style="font-family:'Crimson Pro',serif;font-size:36px;line-height:.9;margin-bottom:8px">Ready to place<br><em style="color:#FFD88A;font-weight:400">your paper on the desk?</em></h2>
+      <p style="color:#D9C7A0;font-size:13px;margin-bottom:12px">Join 40k aspirants who practice with real desk pressure. 3 free mocks — no card.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><a href="#" class="btn-brass">Upload PDF — Free →</a><a href="#" class="btn-brass btn-dark">Watch 30s demo</a></div>
+    </div>
+    <div class="final-visual">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><strong style="font-size:11px;letter-spacing:.06em">YOUR LEDGER</strong><span style="font-size:11px;background:linear-gradient(180deg,#FFD88A,#C9A86A);padding:4px 8px;border-radius:999px;font-weight:800;border:1px solid #8C6A2E">3/3 FREE</span></div>
+      <div style="padding:10px;border-radius:10px;background:white;border:1px solid #E8D9B0;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div><strong style="font-size:13px">JEE Main 2023</strong><br><span style="font-size:11px;color:#7A6A54">Score 214/360</span></div><span style="font-size:11px;background:#1A1208;color:#FFD88A;padding:5px 9px;border-radius:999px">Analysis →</span></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center"><div style="padding:10px;border-radius:10px;background:linear-gradient(180deg, white, #FFFBEB);border:1px solid #E8D9B0"><b style="font-size:18px">42</b><br><span style="font-size:11px;color:#7A6A54">Mocks</span></div><div style="padding:10px;border-radius:10px;background:linear-gradient(180deg, white, #FFFBEB);border:1px solid #E8D9B0"><b style="font-size:18px">214</b><br><span style="font-size:11px;color:#7A6A54">Avg</span></div><div style="padding:10px;border-radius:10px;background:linear-gradient(180deg, white, #FFFBEB);border:1px solid #E8D9B0"><b style="font-size:18px">68%</b><br><span style="font-size:11px;color:#7A6A54">Acc.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<footer><div><strong style="color:#FFD88A">PARAKH V3 Real</strong> © 2026 • Wood & brass crafted • Privacy • Terms • hello@parakh.ai</div><div>Handmade in India 🇮🇳 • Desk live</div></footer>
+
+<details class="fab">
+  <summary aria-label="Switch version">◈</summary>
+  <div class="fab-panel">
+    <div class="fab-header">SWITCH STYLE <span>19 STYLES</span></div>
+    <div class="fab-grid">
+      <a href="index.html" class="fab-link">V1 SaaS <small>Premium SaaS</small></a>
+      <a href="v2-neumorphic.html" class="fab-link">Neumorphic <small>Soft extruded</small></a>
+      <a href="v3-skeuomorphic.html" class="fab-link active">Skeuomorphic <small>Wood + paper</small></a>
+      <a href="v-glassmorphism.html" class="fab-link">Glassmorphism <small>Frosted glass</small></a>
+      <a href="v-claymorphism.html" class="fab-link">Claymorphism <small>Soft clay</small></a>
+      <a href="v-aurora.html" class="fab-link">Aurora <small>Glowing gradients</small></a>
+      <a href="v-metalmorphism.html" class="fab-link">Metalmorphism <small>Brushed metal</small></a>
+      <a href="v-flat.html" class="fab-link">Flat <small>Zero depth</small></a>
+      <a href="v-flat2.html" class="fab-link">Flat 2.0 <small>Semi-flat</small></a>
+      <a href="v-material.html" class="fab-link">Material <small>Google depth</small></a>
+      <a href="v-fluent.html" class="fab-link">Fluent <small>Microsoft light</small></a>
+      <a href="v-hig.html" class="fab-link">HIG <small>Apple clean</small></a>
+      <a href="v4-neubrutalism.html" class="fab-link">Neubrutalism <small>Raw neon</small></a>
+      <a href="v-brutalist.html" class="fab-link">Brutalist <small>Anti-UX raw</small></a>
+      <a href="v-cyberpunk.html" class="fab-link">Cyberpunk <small>Neon synthwave</small></a>
+      <a href="v-y2k.html" class="fab-link">Y2K Aero <small>Glossy bubbles</small></a>
+      <a href="v-solarpunk.html" class="fab-link">Solarpunk <small>Green futurism</small></a>
+      <a href="v-bento.html" class="fab-link">Bento Grid <small>Boxed layout</small></a>
+      <a href="v-minimalist.html" class="fab-link">Minimalist <small>Whites + type</small></a>
+      <a href="v-dark.html" class="fab-link">Dark Mode <small>OLED first</small></a>
+    </div>
+  </div>
+</details>
+</body>
+
+</html>

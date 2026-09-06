@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parakh — HIG • Content first. Hall true.</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#007AFF;
+  --blue2:#0A84FF;
+  --ink:#1D1D1F;
+  --muted:#6E6E73;
+  --muted2:#86868B;
+  --fill:#F5F5F7;
+  --fill2:#FBFBFD;
+  --surface:#FFFFFF;
+  --border:rgba(0,0,0,.06);
+  --border2:rgba(0,0,0,.08);
+  --radius:18px;
+  --radius-lg:28px;
+  --shadow:0 4px 16px rgba(0,0,0,.06), 0 1px 4px rgba(0,0,0,.04);
+  --shadow-lg:0 12px 32px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--fill);color:var(--ink);line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+
+/* HIG translucent nav — centered pill, minimal chrome */
+.nav-wrap{
+  position:sticky;top:0;z-index:40;padding:12px 16px;
+  background:rgba(251,251,253,.82);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav{
+  max-width:1180px;margin:0 auto;
+  background:rgba(255,255,255,.72);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:999px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 10px 8px 14px;
+  box-shadow:0 4px 16px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.03);
+}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:32px;height:32px;border-radius:50%;background:var(--ink);color:white;display:grid;place-items:center;font-weight:700;font-size:15px;letter-spacing:-.04em}
+.logo-type{font-weight:600;letter-spacing:-.03em;font-size:17px}
+.logo-type span{font-weight:400;color:var(--muted);font-size:15px;letter-spacing:-.02em}
+.nav-links{display:flex;gap:4px}
+.nav-links a{padding:7px 14px;border-radius:999px;font-size:13px;font-weight:500;color:var(--muted);transition:.15s}
+.nav-links a:hover{background:rgba(0,0,0,.04);color:var(--ink)}
+.nav-links a.active{background:var(--ink);color:white}
+.nav-cta{display:flex;gap:8px;align-items:center}
+.btn-ghost{height:36px;padding:0 16px;border-radius:999px;background:rgba(255,255,255,.9);border:1px solid var(--border2);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.btn-blue{height:36px;padding:0 18px;border-radius:999px;background:var(--blue);color:white;border:none;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,122,255,.18);cursor:pointer;transition:.15s}
+.btn-blue:hover{background:#0051D5}
+.btn-blue:active{transform:scale(.98)}
+
+/* hero — HIG: large headline centered, airy, device mockup like Apple */
+.hero{
+  max-width:1180px;margin:0 auto;padding:56px 20px 0;
+  text-align:center;
+}
+.hero-label{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--blue);color:white;padding:6px 14px 6px 8px;border-radius:999px;
+  font-size:12px;font-weight:700;letter-spacing:.02em;margin-bottom:18px;box-shadow:0 4px 12px rgba(0,122,255,.18)
+}
+.hero-label b{background:rgba(255,255,255,.18);padding:4px 8px;border-radius:999px;font-size:11px}
+.hero h1{
+  font-size:64px;line-height:1.0;letter-spacing:-.05em;font-weight:600;max-width:880px;margin:0 auto 16px;
+  color:var(--ink)
+}
+.hero h1 .thin{font-weight:400;letter-spacing:-.04em;color:var(--muted2)}
+.hero h1 .blue{color:var(--blue);font-weight:700}
+.hero p.sub{
+  font-size:19px;line-height:1.5;letter-spacing:.01em;color:var(--muted);
+  max-width:720px;margin:0 auto 24px;font-weight:400
+}
+.hero p.sub strong{color:var(--ink);font-weight:600}
+.hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.btn-hero-blue{
+  height:48px;padding:0 26px;border-radius:999px;background:var(--blue);color:white;border:none;
+  font-size:17px;font-weight:600;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:10px;
+  box-shadow:0 8px 20px rgba(0,122,255,.18);cursor:pointer;transition:.15s
+}
+.btn-hero-blue:hover{background:#0051D5;box-shadow:0 12px 28px rgba(0,122,255,.22)}
+.btn-hero-white{
+  height:48px;padding:0 22px;border-radius:999px;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);
+  border:1px solid var(--border2);font-size:15px;font-weight:600;display:inline-flex;align-items:center;gap:8px;
+  box-shadow:var(--shadow);transition:.15s
+}
+.btn-hero-white:hover{background:white;box-shadow:var(--shadow-lg)}
+.trust{margin-top:18px;display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted2);font-weight:500}
+.avatars{display:flex}
+.avatars span{width:28px;height:28px;border-radius:50%;border:2px solid var(--fill);margin-left:-8px;display:grid;place-items:center;font-size:11px;font-weight:600;color:white;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.avatars span:first-child{margin-left:0;background:#1D1D1F}
+.avatars span:nth-child(2){background:#86868B}
+.avatars span:nth-child(3){background:var(--blue)}
+.pill-hig{background:white;border:1px solid var(--border2);padding:6px 12px;border-radius:999px;box-shadow:var(--shadow);font-weight:600;display:inline-flex;gap:6px;align-items:center}
+
+/* hero device — iPad-like chrome, airy */
+.stage{
+  max-width:980px;margin:28px auto 0;padding:0 20px;position:relative
+}
+.device{
+  background:white;border:1px solid var(--border2);border-radius:28px;
+  box-shadow:0 20px 60px rgba(0,0,0,.08), 0 8px 20px rgba(0,0,0,.05), 0 1px 3px rgba(0,0,0,.04);
+  overflow:hidden;position:relative
+}
+.device-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;border-bottom:1px solid var(--border);
+  background:var(--fill2);position:relative
+}
+.device-top::before{
+  content:"";position:absolute;left:50%;top:8px;transform:translateX(-50%);
+  width:60px;height:6px;background:var(--ink);border-radius:999px;opacity:.08
+}
+.device-left{display:flex;align-items:center;gap:10px}
+.traffic{display:flex;gap:6px}
+.traffic i{width:12px;height:12px;border-radius:50%;border:1px solid rgba(0,0,0,.06)}
+.traffic i:nth-child(1){background:#FF605C} .traffic i:nth-child(2){background:#FFBD44} .traffic i:nth-child(3){background:#00CA4E}
+.device-title{font-size:12px;font-weight:600;letter-spacing:-.01em;color:var(--muted)}
+.timer-pill{
+  height:28px;padding:0 12px;border-radius:999px;background:var(--ink);color:white;
+  font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:6px;letter-spacing:-.01em
+}
+.timer-pill b{color:var(--blue2)}
+.device-body{display:grid;grid-template-columns:1.55fr .85fr;min-height:340px}
+.device-left-pane{padding:18px;border-right:1px solid var(--border)}
+.segments{display:flex;gap:8px;margin-bottom:14px;background:var(--fill);padding:4px;border-radius:999px;width:max-content;border:1px solid var(--border)}
+.segments span{height:28px;padding:0 14px;border-radius:999px;font-size:12px;font-weight:600;display:grid;place-items:center;color:var(--muted);cursor:pointer}
+.segments span.active{background:white;color:var(--ink);box-shadow:var(--shadow);border:1px solid var(--border2)}
+.question-hig{font-size:15px;font-weight:600;line-height:1.4;letter-spacing:-.02em;margin-bottom:14px}
+.options-hig{display:grid;gap:8px;margin-bottom:16px}
+.opt-hig{height:46px;border-radius:12px;border:1px solid var(--border2);background:white;display:flex;gap:12px;align-items:center;padding:0 12px;font-size:14px;font-weight:500;transition:.12s;box-shadow:0 1px 3px rgba(0,0,0,.02)}
+.opt-hig b{width:26px;height:26px;border-radius:50%;border:1px solid var(--border2);display:grid;place-items:center;font-size:11px;background:var(--fill);flex-shrink:0;font-weight:600}
+.opt-hig.sel{border-color:var(--blue);background:rgba(0,122,255,.06);box-shadow:0 2px 8px rgba(0,122,255,.08)}
+.opt-hig.sel b{background:var(--blue);color:white;border-color:var(--blue)}
+.device-actions{display:flex;gap:10px}
+.mini-hig{flex:1;height:36px;border-radius:999px;border:1px solid var(--border2);background:white;font-weight:600;font-size:13px;display:grid;place-items:center;cursor:pointer}
+.mini-hig.dark{background:var(--blue);color:white;border-color:var(--blue)}
+.device-right-pane{padding:18px;background:var(--fill2)}
+.palette-head-hig{font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;text-transform:uppercase}
+.palette-head-hig span{background:white;border:1px solid var(--border2);padding:4px 8px;border-radius:999px;font-size:11px;color:var(--ink);box-shadow:var(--shadow)}
+.palette-hig{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px}
+.pal{height:32px;border-radius:10px;display:grid;place-items:center;font-size:12px;font-weight:600;border:1px solid var(--border2);background:white;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+.pal.ans{background:var(--ink);color:white;border-color:var(--ink)}
+.pal.mark{background:#FFF9C4;border-color:#FFE082}
+.pal.cur{outline:2px solid var(--blue);outline-offset:1px}
+.legend-hig{font-size:12px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;font-weight:500}
+.legend-hig i{width:10px;height:10px;border-radius:3px;border:1px solid var(--border2);display:inline-block;margin-right:4px}
+.legend-hig i.a{background:var(--ink)} .legend-hig i.m{background:#FFF9C4} .legend-hig i.n{background:white}
+
+/* floating HIG bridge — minimal */
+.bridge-hig{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border:1px solid rgba(255,255,255,.6);border-radius:20px;
+  box-shadow:0 12px 32px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+  padding:14px;width:300px;z-index:2
+}
+.bridge-top-hig{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.bridge-logo{width:32px;height:32px;border-radius:50%;background:var(--blue);color:white;display:grid;place-items:center;font-weight:700}
+.progress-hig{height:4px;background:rgba(0,0,0,.06);border-radius:999px;overflow:hidden;margin-bottom:12px}
+.progress-hig i{display:block;height:100%;width:40%;background:var(--blue);border-radius:999px;animation:indet 1.5s ease-in-out infinite}
+@keyframes indet{0%{transform:translateX(-100%)}50%{transform:translateX(240%)}100%{transform:translateX(-100%)}}
+.tags-hig{display:flex;gap:6px;flex-wrap:wrap}
+.tag-hig{font-size:11px;font-weight:600;padding:6px 9px;border-radius:999px;background:var(--fill);border:1px solid var(--border2);display:inline-flex;gap:6px;align-items:center}
+.tag-hig.fill{background:var(--blue);color:white;border-color:var(--blue)}
+.tag-hig .ck{width:14px;height:14px;border-radius:50%;background:var(--ink);color:white;display:grid;place-items:center;font-size:9px}
+
+/* strip HIG — pill bar */
+.strip{max-width:980px;margin:22px auto 0;padding:0 20px}
+.strip-inner{
+  background:white;border:1px solid var(--border2);border-radius:999px;padding:10px 16px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between;
+  box-shadow:var(--shadow)
+}
+.strip-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);display:flex;gap:8px;align-items:center}
+.strip-label::before{content:"";width:20px;height:2px;background:var(--blue);border-radius:999px}
+.pills{display:flex;gap:7px;flex-wrap:wrap}
+.pill{height:32px;padding:0 12px;border-radius:999px;background:var(--fill);border:1px solid var(--border2);font-size:12.5px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.pill b{color:var(--ink)}
+.pill.live{background:var(--blue);color:white;border-color:var(--blue);box-shadow:0 4px 12px rgba(0,122,255,.16)}
+
+/* sections — large whitespace, HIG headings */
+.section{max-width:1180px;margin:0 auto;padding:72px 20px 0}
+.section-head{max-width:720px;margin:0 auto 32px;text-align:center}
+.kicker-hig{
+  display:inline-flex;align-items:center;gap:8px;
+  background:white;border:1px solid var(--border2);padding:6px 12px;border-radius:999px;
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);box-shadow:var(--shadow);margin-bottom:12px
+}
+.kicker-hig i{width:6px;height:6px;background:var(--blue);border-radius:50%}
+.section-head h2{font-size:48px;line-height:1.0;letter-spacing:-.04em;font-weight:600}
+.section-head h2 .thin{font-weight:300;color:var(--muted)}
+.section-head h2 em{font-style:normal;color:var(--blue);font-weight:600}
+.section-head p{color:var(--muted);font-size:17px;line-height:1.5;margin-top:10px;font-weight:400}
+
+/* steps HIG — 3 large cards with SF symbols feel */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{
+  background:white;border:1px solid var(--border2);border-radius:20px;padding:20px;
+  box-shadow:var(--shadow);transition:.2s;position:relative;overflow:hidden
+}
+.step:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.step-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:20px;margin-bottom:14px;border:1px solid var(--border2);background:var(--fill)}
+.step:nth-child(1) .step-icon{background:rgba(0,122,255,.08);border-color:rgba(0,122,255,.12);color:var(--blue)}
+.step:nth-child(2) .step-icon{background:rgba(52,199,89,.08);border-color:rgba(52,199,89,.12);color:#28CD41}
+.step:nth-child(3) .step-icon{background:rgba(255,149,0,.08);border-color:rgba(255,149,0,.12);color:#FF9500}
+.step h3{font-size:17px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
+.step p{font-size:14px;color:var(--muted);line-height:1.5;margin-bottom:14px}
+.sheet-hig{border:1px solid var(--border2);border-radius:14px;padding:12px;background:var(--fill2)}
+.drop-hig{border:1px dashed var(--blue);background:rgba(0,122,255,.04);border-radius:14px;padding:16px;text-align:center}
+.drop-hig .ic{width:36px;height:36px;border-radius:50%;background:var(--blue);color:white;display:grid;place-items:center;margin:0 auto 8px}
+
+/* features HIG — 6 with thin separators */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.feat{background:white;border:1px solid var(--border2);border-radius:18px;padding:18px;box-shadow:var(--shadow);transition:.15s}
+.feat:hover{box-shadow:var(--shadow-lg)}
+.feat-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:16px;margin-bottom:12px;background:var(--fill);border:1px solid var(--border2)}
+.feat h4{font-size:15px;font-weight:600;margin-bottom:4px;letter-spacing:-.01em}
+.feat p{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* experience HIG — large airy */
+.experience{max-width:1180px;margin:72px auto 0;padding:0 20px}
+.exp-wrap{
+  display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:center;
+  background:white;border:1px solid var(--border2);border-radius:28px;padding:24px;box-shadow:var(--shadow-lg)
+}
+.exp-visual{border:1px solid var(--border2);border-radius:20px;overflow:hidden;background:var(--fill2);box-shadow:var(--shadow)}
+.exp-top{height:48px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:white}
+.exp-top strong{font-size:12px;font-weight:600;letter-spacing:-.01em;display:flex;gap:8px;align-items:center}
+.exp-top strong::before{content:"";width:8px;height:8px;background:var(--blue);border-radius:50%;box-shadow:0 0 8px rgba(0,122,255,.3)}
+.exp-body{padding:16px}
+.exp-copy h2{font-size:40px;line-height:1.0;letter-spacing:-.04em;font-weight:600;margin-bottom:10px}
+.exp-copy h2 .thin{font-weight:300;color:var(--muted)}
+.exp-copy h2 em{color:var(--blue);font-style:normal}
+.exp-copy p{font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.list{display:grid;gap:12px;margin-bottom:18px}
+.item{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.5;color:var(--muted)}
+.item strong{color:var(--ink);font-weight:600}
+.item i{width:32px;height:32px;border-radius:50%;background:var(--fill);border:1px solid var(--border2);display:grid;place-items:center;flex-shrink:0}
+
+/* exams HIG */
+.exams{background:white;border:1px solid var(--border2);border-radius:28px;padding:24px;box-shadow:var(--shadow);margin-top:16px}
+.exams-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:end;margin-bottom:16px}
+.exams-head h3{font-size:28px;font-weight:600;letter-spacing:-.03em;line-height:1.0}
+.exams-head p{color:var(--muted);max-width:440px;font-size:15px;line-height:1.5}
+.exam-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.exam-card{border:1px solid var(--border2);border-radius:16px;padding:16px;background:var(--fill2);transition:.15s}
+.exam-card:hover{background:white;box-shadow:var(--shadow);transform:translateY(-1px)}
+.exam-card strong{font-size:14px;font-weight:600}
+.exam-card p{font-size:13px;color:var(--muted);margin:6px 0 8px;line-height:1.4}
+.exam-card .meta{font-size:12px;font-weight:600;color:var(--blue);display:flex;gap:6px;align-items:center}
+.exam-card.dark{background:var(--ink);color:white;border-color:var(--ink)}
+.exam-card.dark p{color:rgba(255,255,255,.6)} .exam-card.dark .meta{color:var(--blue2)}
+
+/* final HIG — airy */
+.final{max-width:1180px;margin:72px auto 0;padding:0 20px 48px}
+.final-card{
+  display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center;
+  background:white;border:1px solid var(--border2);border-radius:28px;padding:24px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden
+}
+.final-copy h2{font-size:44px;line-height:.95;letter-spacing:-.04em;font-weight:600;margin-bottom:10px}
+.final-copy h2 .blue{color:var(--blue)}
+.final-copy p{font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.final-visual{background:var(--fill);border:1px solid var(--border2);border-radius:20px;padding:16px}
+
+footer{max-width:1180px;margin:0 auto;padding:16px 20px 32px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted2);font-size:12px;border-top:1px solid var(--border);margin-top:16px}
+
+@media(max-width:980px){
+  .hero h1{font-size:48px}
+  .device-body{grid-template-columns:1fr}
+  .device-right-pane{border-top:1px solid var(--border)}
+  .bridge-hig{position:relative;left:auto;top:auto;transform:none;width:100%;margin:-10px auto 0}
+  .steps{grid-template-columns:1fr}
+  .features{grid-template-columns:1fr 1fr}
+  .exam-grid{grid-template-columns:1fr 1fr}
+  .exp-wrap{grid-template-columns:1fr}
+  .final-card{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .section-head h2{font-size:36px}
+}
+@media(max-width:640px){
+  .hero h1{font-size:36px}
+  .features{grid-template-columns:1fr}
+  .exam-grid{grid-template-columns:1fr}
+  .section-head h2{font-size:32px}
+  .exp-copy h2{font-size:32px}
+  .final-copy h2{font-size:32px}
+}
+
+/* FAB HIG — translucent, blurred */
+.fab{position:fixed;bottom:24px;right:24px;z-index:99}
+.fab summary{
+  list-style:none;width:58px;height:58px;border-radius:50%;
+  background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  color:var(--ink);display:grid;place-items:center;cursor:pointer;
+  border:1px solid rgba(0,0,0,.06);box-shadow:0 8px 20px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.05);
+  font-size:22px;font-weight:600;user-select:none;transition:.15s
+}
+.fab summary::-webkit-details-marker{display:none}
+.fab[open] summary{background:var(--ink);color:white;transform:rotate(90deg)}
+.fab-panel{
+  position:absolute;bottom:72px;right:0;width:320px;max-height:72vh;overflow:auto;
+  background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border:1px solid rgba(0,0,0,.06);border-radius:20px;
+  box-shadow:0 20px 50px rgba(0,0,0,.12), 0 8px 20px rgba(0,0,0,.06);
+  padding:12px;animation:fabIn .18s ease
+}
+@keyframes fabIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.fab-header{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.fab-header span{font-size:10px;background:var(--ink);color:white;padding:4px 8px;border-radius:999px}
+.fab-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.fab-link{display:block;padding:10px 12px;border-radius:12px;border:1px solid var(--border2);background:rgba(255,255,255,.7);font-size:12.5px;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:.12s}
+.fab-link.active{background:var(--blue);color:white;border-color:var(--blue);box-shadow:0 4px 12px rgba(0,122,255,.18)}
+.fab-link:hover{background:white;transform:translateY(-1px)}
+
+/* Top style pill bar - 1-click switch */
+.style-bar{
+  max-width:1180px;margin:14px auto 0;padding:0 16px;
+  position:sticky;top:76px;z-index:45;
+}
+.style-bar-inner{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  padding:8px 10px;
+  background:rgba(255,253,247,.92);backdrop-filter:blur(12px) saturate(1.2);
+  border:1px solid rgba(14,20,36,.08);border-radius:999px;
+  box-shadow:0 8px 24px rgba(14,20,36,.08), 0 2px 8px rgba(14,20,36,.06);
+}
+.style-bar-inner::-webkit-scrollbar{display:none}
+.style-pill{
+  white-space:nowrap;flex-shrink:0;
+  padding:8px 14px;border-radius:999px;
+  font-size:12.5px;font-weight:800;letter-spacing:-.01em;
+  border:1px solid transparent;background:transparent;color:#5A4A32;
+  transition:.15s;line-height:1;
+}
+.style-pill.active{
+  background:#0E1424;color:#D9FF54;border-color:#0E1424;
+  box-shadow:0 4px 12px rgba(14,20,36,.15);
+}
+.style-pill:hover{background:#FFF6D5;border-color:#E8D9B0;color:#0E1424}
+@media(max-width:640px){
+  .style-bar{top:68px;margin-top:10px}
+  .style-pill{padding:7px 11px;font-size:12px}
+}
+
+/* Top full-width style bar - above everything */
+.style-bar{
+  display:none; /* hide old bar if any leftover */
+}
+.style-bar-full{
+  position:sticky;top:0;z-index:60;
+  width:100%;
+  background:rgba(255,253,247,.94);backdrop-filter:blur(14px) saturate(1.2);
+  border-bottom:1px solid rgba(14,20,36,.08);
+  box-shadow:0 4px 20px rgba(14,20,36,.06);
+  padding:10px 0;
+}
+.style-bar-inner-full{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  padding:0 16px;
+  max-width:1180px;margin:0 auto;
+  align-items:center;
+}
+.style-bar-inner-full::-webkit-scrollbar{display:none}
+.style-pill-full{
+  white-space:nowrap;flex-shrink:0;
+  padding:8px 14px;border-radius:999px;
+  font-size:12.5px;font-weight:800;letter-spacing:-.01em;
+  border:1px solid transparent;background:transparent;color:#5A4A32;
+  transition:.15s;line-height:1;
+}
+.style-pill-full.active{
+  background:#0E1424;color:#D9FF54;border-color:#0E1424;
+  box-shadow:0 4px 12px rgba(14,20,36,.15);
+}
+.style-pill-full:hover{background:#FFF6D5;border-color:#E8D9B0;color:#0E1424}
+@media(max-width:640px){
+  .style-bar-full{padding:8px 0}
+  .style-pill-full{padding:7px 11px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="style-bar-full"><div class="style-bar-inner-full">
+      <a href="index.html" class="style-pill-full">V1 SaaS</a>
+      <a href="v2-neumorphic.html" class="style-pill-full">Neumorphic</a>
+      <a href="v3-skeuomorphic.html" class="style-pill-full">Skeuomorphic</a>
+      <a href="v-glassmorphism.html" class="style-pill-full">Glassmorphism</a>
+      <a href="v-claymorphism.html" class="style-pill-full">Claymorphism</a>
+      <a href="v-aurora.html" class="style-pill-full">Aurora</a>
+      <a href="v-metalmorphism.html" class="style-pill-full">Metalmorphism</a>
+      <a href="v-flat.html" class="style-pill-full">Flat</a>
+      <a href="v-flat2.html" class="style-pill-full">Flat 2.0</a>
+      <a href="v-material.html" class="style-pill-full">Material</a>
+      <a href="v-fluent.html" class="style-pill-full">Fluent</a>
+      <a href="v-hig.html" class="style-pill-full active">HIG</a>
+      <a href="v4-neubrutalism.html" class="style-pill-full">Neubrutalism</a>
+      <a href="v-brutalist.html" class="style-pill-full">Brutalist</a>
+      <a href="v-cyberpunk.html" class="style-pill-full">Cyberpunk</a>
+      <a href="v-y2k.html" class="style-pill-full">Y2K Aero</a>
+      <a href="v-solarpunk.html" class="style-pill-full">Solarpunk</a>
+      <a href="v-bento.html" class="style-pill-full">Bento Grid</a>
+      <a href="v-minimalist.html" class="style-pill-full">Minimalist</a>
+      <a href="v-dark.html" class="style-pill-full">Dark Mode</a>
+    </div></div>
+<div class="nav-wrap">
+  <nav class="nav">
+    <div class="logo"><div class="logo-mark">◐</div><div class="logo-type">Parakh <span>— Practice like real</span></div></div>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#exams">Exams</a>
+      <a href="#features">Features</a>
+      <a href="#support">Support</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#try" class="btn-ghost">Sign In</a>
+      <a href="#try" class="btn-blue">Create Mock — Free</a>
+    </div>
+  </nav>
+</div>
+
+
+<section class="hero">
+  <div class="hero-label"><b>HIG</b> Content-first • Airy • True to hall</div>
+  <h1>The exam, <span class="thin">not the chrome.</span><br><span class="blue">Your PDF becomes hall.</span></h1>
+  <p class="sub">Drop the messy PYQ, the scanned coaching sheet, the 300-page bank. Parakh reads it — <strong>questions, sections, negatives, duration</strong> — and layers a quiet, spacious CBT. Like NTA / TCS iON, but with Apple’s calm.</p>
+  <div class="hero-actions">
+    <a href="#try" class="btn-hero-blue">Upload PDF & create mock <span style="width:22px;height:22px;background:rgba(255,255,255,.18);border-radius:50%;display:grid;place-items:center">→</span></a>
+    <a href="#how" class="btn-hero-white">See how quiet it is <span style="width:20px;height:20px;border-radius:50%;background:var(--fill);border:1px solid var(--border2);display:grid;place-items:center;font-size:10px">▶</span></a>
+  </div>
+  <div class="trust">
+    <div class="avatars"><span>A</span><span>S</span><span>R</span></div>
+    <span><strong>40,000+</strong> aspirants</span>
+    <span>• 2.3M questions rendered</span>
+    <span class="pill-hig">✦ JEE • NEET • UPSC • GATE</span>
+    <span class="pill-hig" style="background:var(--ink);color:white;border-color:var(--ink)">4.9★ • App Store love</span>
+  </div>
+</section>
+
+<div class="stage">
+  <div class="device">
+    <div class="device-top">
+      <div class="device-left"><div class="traffic"><i></i><i></i><i></i></div><span class="device-title">Parakh CBT • JEE Main 2024 — Mock 01</span></div>
+      <span class="timer-pill"><span style="width:6px;height:6px;background:#FF3B30;border-radius:50%;display:inline-block"></span> 02:18:45 <b>remaining</b></span>
+    </div>
+    <div class="device-body">
+      <div class="device-left-pane">
+        <div class="segments"><span class="active">Physics • 30</span><span>Chemistry</span><span>Mathematics</span></div>
+        <div class="question-hig">Q14. If α and β are roots of x² − 6x + 4 = 0, then α³ + β³ = ?</div>
+        <div class="options-hig">
+          <div class="opt-hig"><b>A</b> 144</div>
+          <div class="opt-hig sel"><b>B</b> 136 — Selected</div>
+          <div class="opt-hig"><b>C</b> 128</div>
+          <div class="opt-hig"><b>D</b> 120</div>
+        </div>
+        <div class="device-actions"><span class="mini-hig">← Previous</span><span class="mini-hig dark">Save & Next →</span><span class="mini-hig" style="background:#FFF9C4;border-color:#FFE082">Mark for Review</span></div>
+      </div>
+      <div class="device-right-pane">
+        <div class="palette-head-hig"><span>Question Palette</span><span>14 / 90</span></div>
+        <div class="palette-hig">
+          <span class="pal ans">1</span><span class="pal ans">2</span><span class="pal">3</span><span class="pal mark">4</span><span class="pal">5</span>
+          <span class="pal">6</span><span class="pal cur">7</span><span class="pal ans">8</span><span class="pal">9</span><span class="pal mark">10</span>
+          <span class="pal ans">11</span><span class="pal">12</span><span class="pal">13</span><span class="pal ans" style="background:var(--blue);color:white;border-color:var(--blue)">14</span><span class="pal">15</span>
+        </div>
+        <div class="legend-hig"><span><i class="a"></i>Answered</span><span><i class="m"></i>Marked</span><span><i class="n"></i>Not visited</span></div>
+        <div style="margin-top:14px;background:white;border:1px solid var(--border2);border-radius:12px;padding:12px;box-shadow:var(--shadow)">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px">Instructions</div>
+          <div style="height:6px;background:var(--fill);border-radius:999px;margin-bottom:6px"></div>
+          <div style="height:6px;background:var(--fill);border-radius:999px;width:80%"></div>
+          <div style="margin-top:8px;font-size:11px;font-weight:600;color:var(--blue)">+4 −1 • 180 mins • 3 sections</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bridge-hig">
+    <div class="bridge-top-hig"><div class="bridge-logo">✦</div><div><strong style="font-size:13px">PARAKH HIG AI</strong><br><span style="font-size:11px;color:var(--muted)">Quiet parsing • 39s</span></div><span style="margin-left:auto;font-size:11px;background:var(--ink);color:white;padding:5px 8px;border-radius:999px">39s</span></div>
+    <div class="progress-hig"><i></i></div>
+    <div class="tags-hig"><span class="tag-hig fill"><span class="ck">✓</span> 90 Qs</span><span class="tag-hig fill"><span class="ck">✓</span> 180 min</span><span class="tag-hig">+4 −1</span><span class="tag-hig">3 Sections</span></div>
+  </div>
+</div>
+
+<div class="strip">
+  <div class="strip-inner">
+    <div class="strip-label">Calm for every exam</div>
+    <div class="pills">
+      <span class="pill"><b>JEE</b> • Mains & Adv</span>
+      <span class="pill"><b>NEET</b> • UG</span>
+      <span class="pill live">UPSC • CSE</span>
+      <span class="pill">GATE • 30 papers</span>
+      <span class="pill">SSC • Banking</span>
+      <span class="pill">CAT • CUET</span>
+      <span class="pill live">Any PDF → Quiet mock</span>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="how">
+  <div class="section-head">
+    <div class="kicker-hig"><i></i> PDF → UNDERSTAND → ATTEMPT</div>
+    <h2>Airy by design. <em>Exam-true by default.</em></h2>
+    <p>Large type, generous whitespace, no chrome. The hall breathes so you can focus for 180 minutes — exactly like the centre, minus the harshness.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-icon">◈</div>
+      <h3>Drop any PDF</h3>
+      <p>PYQs, coaching scans, phone photos — even 300 pages. The drop zone is quiet, not loud.</p>
+      <div class="sheet-hig"><div class="drop-hig"><div class="ic">↑</div><strong>Drop PDF</strong><br><span style="font-size:12px;color:var(--muted)">or choose file • up to 50MB</span></div><div style="margin-top:8px;background:white;border:1px solid var(--border2);border-radius:12px;padding:8px 10px;display:flex;justify-content:space-between;font-size:13px;font-weight:600"><span>NEET_2021.pdf</span><span style="color:var(--blue)">18 MB</span></div></div>
+    </div>
+    <div class="step">
+      <div class="step-icon">✦</div>
+      <h3>Quiet AI understands</h3>
+      <p>Duration, negatives, sections — understood without spinners, shown with calm progress.</p>
+      <div class="sheet-hig">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="background:white;border:1px solid var(--border2);border-radius:12px;padding:12px;text-align:center"><small style="font-size:10px;letter-spacing:.08em;color:var(--muted2);font-weight:700">DURATION</small><br><strong style="font-size:17px">180m</strong></div>
+          <div style="background:white;border:1px solid var(--border2);border-radius:12px;padding:12px;text-align:center"><small style="font-size:10px;letter-spacing:.08em;color:var(--muted2);font-weight:700">MARKING</small><br><strong style="font-size:17px">+4 −1</strong></div>
+          <div style="background:white;border:1px solid var(--border2);border-radius:12px;padding:12px;text-align:center"><small style="font-size:10px;letter-spacing:.08em;color:var(--muted2);font-weight:700">SECTIONS</small><br><strong style="font-size:17px">3</strong></div>
+          <div style="background:white;border:1px solid var(--border2);border-radius:12px;padding:12px;text-align:center"><small style="font-size:10px;letter-spacing:.08em;color:var(--muted2);font-weight:700">Qs</small><br><strong style="font-size:17px">90</strong></div>
+        </div>
+        <div style="margin-top:8px;background:var(--ink);color:white;padding:8px;border-radius:12px;text-align:center;font-size:12px;font-weight:600">✓ Instructions preserved quietly</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">▶</div>
+      <h3>Attempt, calmly</h3>
+      <p>Palette, timer, mark-for-review — all airy, legible, with SF-weight hierarchy.</p>
+      <div class="sheet-hig">
+        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600"><span>Q14 / 90</span><span style="background:var(--ink);color:white;padding:4px 8px;border-radius:999px">01:42:11</span></div>
+        <div style="height:6px;background:var(--blue);border-radius:999px;width:72%;margin-top:10px"></div>
+        <div style="height:6px;background:var(--fill);border:1px solid var(--border);border-radius:999px;width:90%;margin-top:6px"></div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px"><span class="pal ans">1</span><span class="pal mark">2</span><span class="pal">3</span><span class="pal">4</span><span class="pal">5</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div class="kicker-hig"><i></i> WHY HIG PARAKH</div>
+    <h2>Content first. <em>Chrome never.</em></h2>
+    <p>Deference to your content. Clarity in palettes. Depth with blur, not shadow. It’s the hall without the noise.</p>
+  </div>
+  <div class="features">
+    <div class="feat"><div class="feat-icon">◫</div><h4>Finds every Q</h4><p>MCQ, MSQ, NAT, comprehension — SF-friendly hierarchy.</p></div>
+    <div class="feat"><div class="feat-icon">◎</div><h4>Knows marking</h4><p>+4 −1, +3 −0.33 — rendered with quiet chips.</p></div>
+    <div class="feat"><div class="feat-icon">⬙</div><h4>Instructions first</h4><p>Verbatim, scrollable, before Start — content, not chrome.</p></div>
+    <div class="feat"><div class="feat-icon">⚡</div><h4>~39 seconds</h4><p>Upload 10:00, attempt 10:01 — no forms.</p></div>
+    <div class="feat"><div class="feat-icon">▦</div><h4>Palette + keys</h4><p>Answered / marked / not visited — with 1-4 M N.</p></div>
+    <div class="feat"><div class="feat-icon">◈</div><h4>Analysis after</h4><p>Score, accuracy, time/Q — airy cards, honest.</p></div>
+  </div>
+</section>
+
+<section class="experience">
+  <div class="exp-wrap">
+    <div class="exp-copy">
+      <div class="kicker-hig"><i></i> THE HALL, DEFERRED</div>
+      <h2>Feels like <span class="thin">NTA / TCS iON.</span><br><em>Looks like Apple.</em></h2>
+      <p>We deferred chrome — kept only the hall’s urgency: countdown, palette, auto-submit. Everything else is whitespace and type.</p>
+      <div class="list">
+        <div class="item"><i>◷</i><span><strong>Real countdown.</strong> hits 00:00 → quietly auto-submits, like centre.</span></div>
+        <div class="item"><i>▦</i><span><strong>Palette clarity.</strong> SF-weight distinction, not color noise.</span></div>
+        <div class="item"><i>⇄</i><span><strong>Section deference.</strong> Content leads, controls follow.</span></div>
+      </div>
+      <a href="#try" class="btn-blue">Try HIG CBT →</a>
+    </div>
+    <div class="exp-visual">
+      <div class="exp-top"><strong>Parakh HIG • NEET 2022 — Mock 01</strong><span class="timer-pill">● 01:44:02 left</span></div>
+      <div class="exp-body">
+        <div style="display:flex;gap:6px;margin-bottom:10px"><span style="padding:7px 12px;border-radius:999px;background:var(--ink);color:white;font-size:12px;font-weight:600">Botany</span><span style="padding:7px 12px;border-radius:999px;background:white;border:1px solid var(--border2);font-size:12px;font-weight:600">Zoology</span><span style="padding:7px 12px;border-radius:999px;background:white;border:1px solid var(--border2);font-size:12px;font-weight:600">Physics</span></div>
+        <div style="display:flex;gap:6px;margin-bottom:8px"><span style="font-size:11px;font-weight:600;padding:5px 8px;border-radius:999px;background:var(--fill);border:1px solid var(--border2)">Q27 • +4 −1</span><span style="font-size:11px;font-weight:600;padding:5px 8px;border-radius:999px;background:#FFF9C4;border:1px solid #FFE082">Marked</span></div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:10px">Q27. Which is NOT characteristic of collenchyma?</div>
+        <div style="display:grid;gap:7px;margin-bottom:12px">
+          <div class="opt-hig"><b>A</b> Living cells</div>
+          <div class="opt-hig sel"><b>B</b> Thickened corners — Your pick</div>
+          <div class="opt-hig"><b>C</b> Dead at maturity</div>
+          <div class="opt-hig"><b>D</b> Mechanical support</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:12px"><div style="display:flex;gap:8px"><span class="mini-hig">← Previous</span><span class="mini-hig dark">Save & Next →</span></div><div style="display:flex;gap:6px"><span class="pal">11</span><span class="pal mark">12</span><span class="pal cur">13</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="exams">
+  <div class="exams">
+    <div class="exams-head"><h3>One quiet engine.<br>Every Indian exam.</h3><p>If it’s a PDF, HIG can hold it calmly — JEE sprint or UPSC marathon, same air.</p></div>
+    <div class="exam-grid">
+      <div class="exam-card"><strong>JEE Mains & Adv</strong><p>PCM, NAT, paragraph • PYQs 2012→</p><div class="meta">12.5L / year</div></div>
+      <div class="exam-card"><strong>NEET UG</strong><p>200 Qs • Botany-Zoology-Phys-Chem</p><div class="meta">20L / year</div></div>
+      <div class="exam-card"><strong>UPSC CSE</strong><p>GS + CSAT • exact instruction scroll</p><div class="meta">Most detailed</div></div>
+      <div class="exam-card"><strong>GATE</strong><p>MCQ + MSQ + NAT • calc • 30 papers</p><div class="meta">65 Qs • 180m</div></div>
+      <div class="exam-card"><strong>UGC NET</strong><p>Paper 1+2 • 82 subjects • 3h</p><div class="meta">82 subjects</div></div>
+      <div class="exam-card"><strong>SSC CGL</strong><p>Quant • Reasoning • English • GK</p><div class="meta">30L+ candidates</div></div>
+      <div class="exam-card"><strong>Banking PO</strong><p>SBI • IBPS • sectional cutoffs</p><div class="meta">English & Hindi</div></div>
+      <div class="exam-card dark"><strong>CAT • CUET • STATE</strong><p>Any PDF — state TET, PCS, private series. Quietly.</p><div class="meta">Try now →</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="final-card">
+    <div class="final-copy">
+      <h2>Quiet hall.<br><span class="blue">Loud results.</span></h2>
+      <p>40,000 aspirants chose whitespace over noise. Three mocks free — no card. Upload your PDF, feel the calm hall in 39 seconds.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="#try" class="btn-blue" style="height:44px;padding:0 20px">Upload PDF — free →</a>
+        <a href="#how" class="btn-ghost" style="height:44px">Watch quiet demo</a>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:12px;font-size:12px;font-weight:600;color:var(--muted);flex-wrap:wrap"><span>✓ No signup</span><span>✓ Scanned OK</span><span>✓ 39s quiet</span></div>
+    </div>
+    <div class="final-visual">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><strong style="font-size:11px;letter-spacing:.06em">YOUR LIBRARY</strong><span style="background:var(--ink);color:white;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:600">3/3 FREE</span></div>
+      <div style="border:1px solid var(--border2);border-radius:14px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;background:white"><div><strong>UPSC GS 1 • 2022</strong><br><span style="font-size:12px;color:var(--muted)">82/200 • quiet perfect</span></div><span style="background:var(--blue);color:white;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600">Analysis →</span></div>
+      <div style="height:6px;background:var(--fill);border-radius:999px;overflow:hidden;margin-bottom:10px;border:1px solid var(--border)"><div style="height:100%;width:68%;background:var(--blue);border-radius:999px"></div></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center"><div style="background:var(--fill);border:1px solid var(--border2);border-radius:12px;padding:10px"><b>42</b><br><span style="font-size:11px;color:var(--muted)">Mocks</span></div><div style="background:var(--fill);border:1px solid var(--border2);border-radius:12px;padding:10px"><b>214</b><br><span style="font-size:11px;color:var(--muted)">Avg</span></div><div style="background:var(--fill);border:1px solid var(--border2);border-radius:12px;padding:10px"><b>68%</b><br><span style="font-size:11px;color:var(--muted)">Acc</span></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div><strong>PARAKH HIG</strong> © 2026 • Deference • Clarity • Depth • Made for India’s halls • Privacy • Terms</div>
+  <div>Designed in California, forged in India • 40k users</div>
+</footer>
+
+<details class="fab"><summary>◈</summary><div class="fab-panel"><div class="fab-header">SWITCH STYLE <span>19 STYLES</span></div><div class="fab-grid">
+<a href="index.html" class="fab-link">V1 SaaS</a>
+<a href="v2-neumorphic.html" class="fab-link">Neumorphic</a>
+<a href="v3-skeuomorphic.html" class="fab-link">Skeuomorphic</a>
+<a href="v-glassmorphism.html" class="fab-link">Glassmorphism</a>
+<a href="v-claymorphism.html" class="fab-link">Claymorphism</a>
+<a href="v-aurora.html" class="fab-link">Aurora</a>
+<a href="v-metalmorphism.html" class="fab-link">Metalmorphism</a>
+<a href="v-flat.html" class="fab-link">Flat</a>
+<a href="v-flat2.html" class="fab-link">Flat 2.0</a>
+<a href="v-material.html" class="fab-link">Material</a>
+<a href="v-fluent.html" class="fab-link">Fluent</a>
+<a href="v-hig.html" class="fab-link active">HIG</a>
+<a href="v4-neubrutalism.html" class="fab-link">Neubrutalism</a>
+<a href="v-brutalist.html" class="fab-link">Brutalist</a>
+<a href="v-cyberpunk.html" class="fab-link">Cyberpunk</a>
+<a href="v-y2k.html" class="fab-link">Y2K Aero</a>
+<a href="v-solarpunk.html" class="fab-link">Solarpunk</a>
+<a href="v-bento.html" class="fab-link">Bento Grid</a>
+<a href="v-minimalist.html" class="fab-link">Minimalist</a>
+<a href="v-dark.html" class="fab-link">Dark Mode</a>
+</div></div></details>
+</body>
+</html>

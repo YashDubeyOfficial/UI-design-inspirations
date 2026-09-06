@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parakh — Flat 2.0 • Soft depth, still flat.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --indigo:#4F46E5;
+  --violet:#7C3AED;
+  --fuchsia:#C026D3;
+  --cyan:#06B6D4;
+  --ink:#111827;
+  --muted:#6B7280;
+  --line:#E9E9FF;
+  --bg:#F8F7FF;
+  --surface:#FFFFFF;
+  --soft:0 4px 12px rgba(17,24,39,.06), 0 1px 3px rgba(17,24,39,.06);
+  --medium:0 8px 24px rgba(17,24,39,.08), 0 2px 8px rgba(17,24,39,.06);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* nav — flat with subtle shadow */
+.nav-wrap{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg, var(--indigo), var(--violet));color:white;display:grid;place-items:center;font-weight:900;box-shadow:0 4px 12px rgba(79,70,229,.2)}
+.logo-type{font-weight:900;letter-spacing:-.04em;font-size:18px}
+.logo-type span{font-weight:500;color:var(--muted);font-size:13px}
+.nav-links{display:flex;gap:20px;font-weight:600;font-size:13.5px;color:#374151}
+.nav-links a{padding:8px 12px;border-radius:10px;transition:.15s}
+.nav-links a:hover{background:white;box-shadow:var(--soft)}
+.nav-cta{display:flex;gap:10px;align-items:center}
+.btn-ghost{padding:10px 16px;border-radius:10px;font-weight:700;font-size:13px;background:white;border:1px solid var(--line);box-shadow:var(--soft)}
+.btn-primary{padding:11px 18px;border-radius:12px;font-weight:800;font-size:13px;color:white;background:linear-gradient(135deg, var(--indigo), var(--violet));border:none;box-shadow:0 6px 16px rgba(79,70,229,.22), 0 2px 6px rgba(79,70,229,.16);display:inline-flex;gap:8px;align-items:center;cursor:pointer;transition:.2s}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(79,70,229,.28)}
+.btn-primary span{width:20px;height:20px;background:rgba(255,255,255,.22);border-radius:50%;display:grid;place-items:center;font-size:12px}
+
+/* hero — CENTERED, distinct from flat left */
+.hero{max-width:1180px;margin:0 auto;padding:42px 20px 0;text-align:center}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:white;border:1px solid var(--line);padding:6px 14px 6px 8px;border-radius:999px;
+  font-size:12.5px;font-weight:700;box-shadow:var(--soft);margin-bottom:16px
+}
+.pill b{background:linear-gradient(135deg, var(--indigo), var(--violet));color:white;padding:4px 10px;border-radius:999px;font-size:11px;letter-spacing:.04em}
+.pill i{width:8px;height:8px;background:#10B981;border-radius:50%;box-shadow:0 0 0 4px rgba(16,185,129,.15);display:inline-block}
+.hero h1{
+  font-size:60px;line-height:.92;letter-spacing:-.05em;font-weight:800;max-width:880px;margin:0 auto 14px
+}
+.hero h1 .grad{
+  background:linear-gradient(135deg, var(--indigo) 0%, var(--violet) 45%, var(--fuchsia) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.hero p.sub{font-size:17px;color:var(--muted);max-width:660px;margin:0 auto 22px;line-height:1.6;font-weight:500}
+.hero p.sub strong{color:var(--ink);font-weight:800}
+.hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.btn-hero-primary{
+  background:linear-gradient(135deg, var(--indigo), var(--violet) 55%, var(--fuchsia));
+  color:white;border:none;padding:14px 24px;border-radius:14px;font-weight:800;font-size:15px;
+  box-shadow:0 10px 24px rgba(79,70,229,.22), 0 3px 8px rgba(124,58,237,.14);
+  display:inline-flex;gap:10px;align-items:center;cursor:pointer;transition:.2s
+}
+.btn-hero-primary:hover{transform:translateY(-2px)}
+.btn-hero-secondary{
+  background:white;border:1px solid var(--line);padding:14px 20px;border-radius:14px;font-weight:700;font-size:14px;
+  box-shadow:var(--soft);display:inline-flex;gap:8px;align-items:center;transition:.15s
+}
+.btn-hero-secondary:hover{box-shadow:var(--medium)}
+.trust{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);font-weight:600}
+.trust strong{color:var(--ink)}
+.avatars{display:flex}
+.avatars span{width:28px;height:28px;border-radius:50%;border:2px solid white;margin-left:-9px;display:grid;place-items:center;font-size:11px;font-weight:800;color:white;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.avatars span:first-child{margin-left:0;background:linear-gradient(135deg,var(--indigo),var(--violet))}
+.avatars span:nth-child(2){background:linear-gradient(135deg,#06B6D4,#0EA5E9)}
+.avatars span:nth-child(3){background:linear-gradient(135deg,#F59E0B,#F97316)}
+.avatars span:last-child{background:var(--ink)}
+
+/* dashboard mockup — flat 2.0 centered */
+.stage{
+  max-width:1180px;margin:28px auto 0;padding:0 20px;position:relative
+}
+.dashboard{
+  background:white;border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  box-shadow:0 12px 32px rgba(17,24,39,.08), 0 4px 12px rgba(17,24,39,.05);position:relative
+}
+.dash-top{
+  display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg, white, #FCFCFF)
+}
+.dash-top-left{display:flex;align-items:center;gap:12px}
+.dots{display:flex;gap:6px}
+.dots i{width:10px;height:10px;border-radius:50%;border:1px solid rgba(0,0,0,.06)}
+.dots i:nth-child(1){background:#FECACA} .dots i:nth-child(2){background:#FEF08A} .dots i:nth-child(3){background:#BBF7D0}
+.dash-title{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--muted)}
+.timer{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  background:var(--ink);color:white;padding:7px 12px;border-radius:999px;display:flex;gap:6px;align-items:center
+}
+.timer b{color:#A5B4FC}
+.dash-body{display:grid;grid-template-columns:1.55fr .85fr;min-height:300px}
+.dash-left{padding:18px;border-right:1px solid var(--line)}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tab{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--muted)}
+.tab.active{background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;border-color:transparent;box-shadow:0 4px 12px rgba(79,70,229,.16)}
+.question{font-size:15px;font-weight:800;line-height:1.4;margin-bottom:14px;letter-spacing:-.02em}
+.options{display:grid;gap:9px;margin-bottom:16px}
+.opt{padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:white;display:flex;gap:10px;align-items:center;font-weight:600;box-shadow:var(--soft);transition:.15s}
+.opt b{width:24px;height:24px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:11px;background:var(--bg);flex-shrink:0}
+.opt.sel{border-color:rgba(79,70,229,.2);background:linear-gradient(135deg, #EEF2FF, #F5F3FF);box-shadow:0 4px 14px rgba(79,70,229,.08)}
+.opt.sel b{background:var(--indigo);color:white;border-color:var(--indigo)}
+.dash-actions{display:flex;gap:10px}
+.mini{flex:1;padding:11px;border-radius:12px;border:1px solid var(--line);background:white;font-weight:700;text-align:center;box-shadow:var(--soft)}
+.mini.dark{background:var(--ink);color:white;border-color:var(--ink)}
+.dash-right{padding:18px;background:linear-gradient(180deg, #FFFBFE, #F8F7FF)}
+.palette-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.palette-head strong{font-size:11px;letter-spacing:.08em}
+.palette-head span{font-size:11px;background:white;border:1px solid var(--line);padding:4px 8px;border-radius:999px;font-weight:700}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px}
+.pal{height:32px;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:12px;border:1px solid var(--line);background:white;box-shadow:var(--soft)}
+.pal.ans{background:var(--ink);color:white;border-color:var(--ink)}
+.pal.mark{background:linear-gradient(135deg,#FEF08A,#FDE68A);border-color:#FDE68A}
+.pal.curr{outline:2px solid var(--indigo);outline-offset:1px}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;font-weight:600;color:var(--muted)}
+.legend i{width:10px;height:10px;border-radius:3px;border:1px solid var(--line);display:inline-block;margin-right:4px}
+.legend i.ans{background:var(--ink)} .legend i.mark{background:#FEF08A} .legend i.not{background:white}
+
+/* floating bridge — subtle */
+.bridge{
+  position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);
+  background:white;border:1px solid var(--line);border-radius:16px;
+  box-shadow:0 12px 32px rgba(17,24,39,.10), 0 4px 12px rgba(17,24,39,.06);
+  padding:14px;width:300px;z-index:2
+}
+.bridge-top{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.bridge-logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;display:grid;place-items:center;font-weight:900;box-shadow:0 4px 12px rgba(79,70,229,.18)}
+.scan{height:6px;background:var(--bg);border-radius:999px;overflow:hidden;border:1px solid var(--line);margin-bottom:12px}
+.scan i{display:block;height:100%;width:40%;background:linear-gradient(90deg,var(--indigo),var(--violet));border-radius:999px;animation:scan 1.6s ease-in-out infinite}
+@keyframes scan{0%{transform:translateX(-100%)}50%{transform:translateX(260%)}100%{transform:translateX(-100%)}}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;font-weight:700;padding:6px 9px;border-radius:999px;border:1px solid var(--line);background:var(--bg);display:inline-flex;gap:6px;align-items:center}
+.tag.fill{background:linear-gradient(135deg,#EEF2FF,#E0E7FF);border-color:#C7D2FE}
+.tag .ck{width:14px;height:14px;border-radius:50%;background:var(--indigo);color:white;display:grid;place-items:center;font-size:9px}
+
+/* strip flat2 with soft shadow */
+.strip{max-width:1180px;margin:22px auto 0;padding:0 20px}
+.strip-inner{
+  background:white;border:1px solid var(--line);border-radius:16px;padding:14px 16px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between;
+  box-shadow:var(--soft)
+}
+.strip-label{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--muted);display:flex;gap:8px;align-items:center}
+.strip-label::before{content:"";width:20px;height:3px;background:linear-gradient(90deg,var(--indigo),var(--violet));border-radius:999px}
+.pills{display:flex;gap:7px;flex-wrap:wrap}
+.pill{padding:7px 11px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-weight:700;font-size:12.5px}
+.pill b{color:var(--indigo)}
+.pill.live{background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;border-color:transparent;box-shadow:0 4px 12px rgba(79,70,229,.16)}
+
+/* sections */
+.section{max-width:1180px;margin:0 auto;padding:56px 20px 0}
+.section-head{text-align:center;max-width:660px;margin:0 auto 30px}
+.kicker{display:inline-flex;gap:8px;align-items:center;background:white;border:1px solid var(--line);padding:6px 12px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);box-shadow:var(--soft);margin-bottom:12px}
+.kicker i{width:6px;height:6px;background:var(--indigo);border-radius:50%}
+.section-head h2{font-size:42px;line-height:.95;letter-spacing:-.04em;font-weight:800}
+.section-head h2 em{font-style:normal;background:linear-gradient(135deg,var(--indigo),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-head p{color:var(--muted);font-weight:500;line-height:1.6;margin-top:10px}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--soft);position:relative;overflow:hidden}
+.step::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(79,70,229,.04), transparent 60%);pointer-events:none}
+.step-num{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.step-num span{width:28px;height:28px;border-radius:10px;background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;display:grid;place-items:center;font-size:12px;box-shadow:0 4px 10px rgba(79,70,229,.16)}
+.step h3{font-size:17px;font-weight:800;margin-bottom:6px}
+.step p{font-size:13.5px;color:var(--muted);line-height:1.6;font-weight:500;margin-bottom:12px}
+.visual{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+.upload{border:1.5px dashed #C7D2FE;background:white;border-radius:12px;padding:14px;text-align:center;box-shadow:var(--soft)}
+.upload .up{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;display:grid;place-items:center;margin:0 auto 8px;box-shadow:0 4px 12px rgba(79,70,229,.16)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mini-card{background:white;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center;box-shadow:var(--soft)}
+
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feat{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--soft);transition:.2s}
+.feat:hover{box-shadow:var(--medium);transform:translateY(-2px)}
+.feat-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:18px;margin-bottom:12px;border:1px solid var(--line);box-shadow:var(--soft)}
+.feat:nth-child(1) .feat-icon{background:linear-gradient(135deg,#EEF2FF,#E0E7FF)}
+.feat:nth-child(2) .feat-icon{background:linear-gradient(135deg,#F5F3FF,#EDE9FE)}
+.feat:nth-child(3) .feat-icon{background:linear-gradient(135deg,#FEF3C7,#FDE68A)}
+.feat:nth-child(4) .feat-icon{background:linear-gradient(135deg,#DCFCE7,#BBF7D0)}
+.feat:nth-child(5) .feat-icon{background:linear-gradient(135deg,#FFE4E6,#FECDD3)}
+.feat:nth-child(6) .feat-icon{background:linear-gradient(135deg,#E0F2FE,#BAE6FD)}
+.feat h4{font-weight:800;font-size:14.5px;margin-bottom:4px}
+.feat p{font-size:13px;color:var(--muted);line-height:1.6;font-weight:500}
+
+/* experience — distinct: copy left, visual right but soft */
+.experience{max-width:1180px;margin:56px auto 0;padding:0 20px}
+.exp-wrap{display:grid;grid-template-columns:.95fr 1.05fr;gap:20px;align-items:center;background:white;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--medium)}
+.exp-visual{border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--soft);background:white}
+.exp-top{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);background:#FFFBFE}
+.exp-top strong{font-size:11px;letter-spacing:.05em;font-weight:800}
+.exp-body{padding:14px}
+.q-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.q-meta span{font-size:11px;font-weight:700;padding:5px 8px;border-radius:999px;background:#EEF2FF;border:1px solid #C7D2FE}
+.q-title{font-size:14px;font-weight:800;line-height:1.4;margin-bottom:10px}
+.opts2{display:grid;gap:7px;margin-bottom:12px}
+.opts2 .opt{font-size:13px}
+.exp-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid var(--line);padding-top:12px}
+.palette-mini{display:flex;gap:6px;align-items:center}
+.palette-mini b{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:800;border:1px solid var(--line);background:white;box-shadow:var(--soft)}
+.palette-mini b.on{background:var(--ink);color:white}
+.palette-mini b.mark{background:#FEF08A;border-color:#FDE68A}
+.exp-copy h2{font-size:32px;line-height:.95;letter-spacing:-.04em;font-weight:800;margin-bottom:10px}
+.exp-copy h2 em{font-style:normal;background:linear-gradient(135deg,var(--indigo),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.exp-copy p{color:var(--muted);line-height:1.6;font-weight:500;margin-bottom:14px}
+.points{display:grid;gap:10px;margin-bottom:16px}
+.point{display:flex;gap:10px;font-size:13.5px;line-height:1.5;font-weight:500;color:#374151}
+.point strong{color:var(--ink)}
+.point i{width:28px;height:28px;border-radius:10px;background:white;border:1px solid var(--line);display:grid;place-items:center;box-shadow:var(--soft);flex-shrink:0}
+
+/* exams */
+.exams{background:white;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--medium);margin-top:14px}
+.exams-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:end;margin-bottom:16px}
+.exams-head h3{font-size:28px;font-weight:800;letter-spacing:-.03em;line-height:.95}
+.exams-head p{color:var(--muted);max-width:420px;font-weight:500}
+.exam-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.exam-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--bg);transition:.2s;box-shadow:var(--soft)}
+.exam-card:hover{transform:translateY(-2px);box-shadow:var(--medium);background:white}
+.exam-card strong{font-weight:800;font-size:14px}
+.exam-card p{font-size:12.5px;color:var(--muted);margin:6px 0 8px;line-height:1.4;font-weight:500}
+.exam-card .meta{font-size:11px;font-weight:700;color:var(--indigo);display:flex;gap:6px;align-items:center}
+.exam-card .meta::before{content:"•";font-size:14px}
+.exam-card.dark{background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;border-color:transparent;box-shadow:0 8px 24px rgba(79,70,229,.18)}
+.exam-card.dark p{color:rgba(255,255,255,.8)} .exam-card.dark .meta{color:#E0E7FF}
+
+/* final */
+.final{max-width:1180px;margin:56px auto 0;padding:0 20px 40px}
+.final-card{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:stretch;background:linear-gradient(135deg, var(--indigo), var(--violet));border-radius:20px;padding:20px;box-shadow:0 16px 40px rgba(79,70,229,.18);color:white;overflow:hidden;position:relative}
+.final-card::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 20% 0%, rgba(255,255,255,.12), transparent 60%);pointer-events:none}
+.final-copy{position:relative}
+.final-copy h2{font-size:34px;line-height:.9;letter-spacing:-.04em;font-weight:800;margin-bottom:10px}
+.final-copy p{color:rgba(255,255,255,.85);line-height:1.6;font-weight:500;margin-bottom:14px}
+.final-visual{background:white;border-radius:16px;padding:16px;box-shadow:0 12px 32px rgba(0,0,0,.12);color:var(--ink);position:relative}
+.progress{height:8px;background:var(--bg);border:1px solid var(--line);border-radius:999px;overflow:hidden;margin:10px 0}
+.progress i{display:block;height:100%;width:70%;background:linear-gradient(90deg,var(--indigo),var(--violet));border-radius:999px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px}
+.stat b{font-size:18px;font-weight:800}
+.stat span{font-size:11px;font-weight:700;color:var(--muted)}
+
+footer{max-width:1180px;margin:0 auto;padding:16px 20px 30px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);margin-top:16px}
+
+/* responsive */
+@media(max-width:980px){
+  .hero h1{font-size:48px}
+  .dash-body{grid-template-columns:1fr}
+  .dash-right{border-top:1px solid var(--line)}
+  .bridge{position:relative;left:auto;top:auto;transform:none;width:100%;margin:-10px auto 0}
+  .steps{grid-template-columns:1fr}
+  .features{grid-template-columns:1fr 1fr}
+  .exam-grid{grid-template-columns:1fr 1fr}
+  .exp-wrap{grid-template-columns:1fr}
+  .final-card{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media(max-width:640px){
+  .hero h1{font-size:36px}
+  .features{grid-template-columns:1fr}
+  .exam-grid{grid-template-columns:1fr}
+  .section-head h2{font-size:32px}
+}
+
+/* FAB flat 2.0 — subtle shadow, gradient */
+.fab{position:fixed;bottom:24px;right:24px;z-index:99}
+.fab summary{list-style:none;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;display:grid;place-items:center;cursor:pointer;border:1px solid rgba(255,255,255,.2);box-shadow:0 8px 20px rgba(79,70,229,.22), 0 4px 12px rgba(0,0,0,.1);font-size:22px;font-weight:900;user-select:none;transition:.2s}
+.fab summary::-webkit-details-marker{display:none}
+.fab[open] summary{transform:rotate(90deg);box-shadow:0 12px 28px rgba(79,70,229,.28)}
+.fab-panel{position:absolute;bottom:72px;right:0;width:320px;max-height:72vh;overflow:auto;background:white;border:1px solid var(--line);border-radius:16px;box-shadow:0 16px 40px rgba(17,24,39,.12), 0 4px 12px rgba(17,24,39,.06);padding:12px;animation:fabIn .2s ease}
+@keyframes fabIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fab-header{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.fab-header span{font-size:10px;background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;padding:4px 8px;border-radius:999px}
+.fab-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.fab-link{display:block;padding:10px 11px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-size:12.5px;font-weight:700;transition:.15s}
+.fab-link.active{background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;border-color:transparent;box-shadow:0 4px 12px rgba(79,70,229,.16)}
+.fab-link:hover{transform:translateY(-1px);box-shadow:var(--soft)}
+
+/* Top style pill bar - 1-click switch */
+.style-bar{
+  max-width:1180px;margin:14px auto 0;padding:0 16px;
+  position:sticky;top:76px;z-index:45;
+}
+.style-bar-inner{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  padding:8px 10px;
+  background:rgba(255,253,247,.92);backdrop-filter:blur(12px) saturate(1.2);
+  border:1px solid rgba(14,20,36,.08);border-radius:999px;
+  box-shadow:0 8px 24px rgba(14,20,36,.08), 0 2px 8px rgba(14,20,36,.06);
+}
+.style-bar-inner::-webkit-scrollbar{display:none}
+.style-pill{
+  white-space:nowrap;flex-shrink:0;
+  padding:8px 14px;border-radius:999px;
+  font-size:12.5px;font-weight:800;letter-spacing:-.01em;
+  border:1px solid transparent;background:transparent;color:#5A4A32;
+  transition:.15s;line-height:1;
+}
+.style-pill.active{
+  background:#0E1424;color:#D9FF54;border-color:#0E1424;
+  box-shadow:0 4px 12px rgba(14,20,36,.15);
+}
+.style-pill:hover{background:#FFF6D5;border-color:#E8D9B0;color:#0E1424}
+@media(max-width:640px){
+  .style-bar{top:68px;margin-top:10px}
+  .style-pill{padding:7px 11px;font-size:12px}
+}
+
+/* Top full-width style bar - above everything */
+.style-bar{
+  display:none; /* hide old bar if any leftover */
+}
+.style-bar-full{
+  position:sticky;top:0;z-index:60;
+  width:100%;
+  background:rgba(255,253,247,.94);backdrop-filter:blur(14px) saturate(1.2);
+  border-bottom:1px solid rgba(14,20,36,.08);
+  box-shadow:0 4px 20px rgba(14,20,36,.06);
+  padding:10px 0;
+}
+.style-bar-inner-full{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  padding:0 16px;
+  max-width:1180px;margin:0 auto;
+  align-items:center;
+}
+.style-bar-inner-full::-webkit-scrollbar{display:none}
+.style-pill-full{
+  white-space:nowrap;flex-shrink:0;
+  padding:8px 14px;border-radius:999px;
+  font-size:12.5px;font-weight:800;letter-spacing:-.01em;
+  border:1px solid transparent;background:transparent;color:#5A4A32;
+  transition:.15s;line-height:1;
+}
+.style-pill-full.active{
+  background:#0E1424;color:#D9FF54;border-color:#0E1424;
+  box-shadow:0 4px 12px rgba(14,20,36,.15);
+}
+.style-pill-full:hover{background:#FFF6D5;border-color:#E8D9B0;color:#0E1424}
+@media(max-width:640px){
+  .style-bar-full{padding:8px 0}
+  .style-pill-full{padding:7px 11px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="style-bar-full"><div class="style-bar-inner-full">
+      <a href="index.html" class="style-pill-full">V1 SaaS</a>
+      <a href="v2-neumorphic.html" class="style-pill-full">Neumorphic</a>
+      <a href="v3-skeuomorphic.html" class="style-pill-full">Skeuomorphic</a>
+      <a href="v-glassmorphism.html" class="style-pill-full">Glassmorphism</a>
+      <a href="v-claymorphism.html" class="style-pill-full">Claymorphism</a>
+      <a href="v-aurora.html" class="style-pill-full">Aurora</a>
+      <a href="v-metalmorphism.html" class="style-pill-full">Metalmorphism</a>
+      <a href="v-flat.html" class="style-pill-full">Flat</a>
+      <a href="v-flat2.html" class="style-pill-full active">Flat 2.0</a>
+      <a href="v-material.html" class="style-pill-full">Material</a>
+      <a href="v-fluent.html" class="style-pill-full">Fluent</a>
+      <a href="v-hig.html" class="style-pill-full">HIG</a>
+      <a href="v4-neubrutalism.html" class="style-pill-full">Neubrutalism</a>
+      <a href="v-brutalist.html" class="style-pill-full">Brutalist</a>
+      <a href="v-cyberpunk.html" class="style-pill-full">Cyberpunk</a>
+      <a href="v-y2k.html" class="style-pill-full">Y2K Aero</a>
+      <a href="v-solarpunk.html" class="style-pill-full">Solarpunk</a>
+      <a href="v-bento.html" class="style-pill-full">Bento Grid</a>
+      <a href="v-minimalist.html" class="style-pill-full">Minimalist</a>
+      <a href="v-dark.html" class="style-pill-full">Dark Mode</a>
+    </div></div>
+<div class="nav-wrap">
+  <nav class="nav">
+    <div class="logo"><div class="logo-mark">P</div><div class="logo-type">PARAKH <span>flat 2.0</span></div></div>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#exams">Exams</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#try" class="btn-ghost">Sign in</a>
+      <a href="#try" class="btn-primary">Create mock <span>↗</span></a>
+    </div>
+  </nav>
+</div>
+
+
+<section class="hero">
+  <div class="pill"><b>NEW</b> Flat 2.0 • subtle depth • still honest <i></i> Live</div>
+  <h1>Flat, but with<br><span class="grad">just enough depth.</span></h1>
+  <p class="sub">Drop your <strong>PYQs, scanned sheets or question banks.</strong> Parakh 2.0 keeps the flat honesty — colors, geometry — but adds soft shadows and gentle gradients so the hall feels usable for 3 hours.</p>
+  <div class="hero-actions">
+    <a href="#try" class="btn-hero-primary">Upload PDF — 40s to CBT →</a>
+    <a href="#how" class="btn-hero-secondary">See soft demo <span style="width:18px;height:18px;border-radius:50%;background:#EEF2FF;display:grid;place-items:center;font-size:10px">▶</span></a>
+  </div>
+  <div class="trust">
+    <div class="avatars"><span>A</span><span>S</span><span>R</span><span>+40k</span></div>
+    <span><strong>40k+</strong> aspirants • <strong>2.3M</strong> Qs rendered • <strong>4.9★</strong> soft flat love</span>
+    <span style="background:white;border:1px solid var(--line);padding:6px 10px;border-radius:999px;box-shadow:var(--soft)">JEE • NEET • UPSC • GATE</span>
+  </div>
+</section>
+
+<div class="stage">
+  <div class="dashboard">
+    <div class="dash-top">
+      <div class="dash-top-left"><div class="dots"><i></i><i></i><i></i></div><span class="dash-title">PARAKH CBT • JEE Main 2024 — Mock 01</span></div>
+      <div class="timer"><span style="width:6px;height:6px;background:#22C55E;border-radius:50%;display:inline-block;box-shadow:0 0 8px rgba(34,197,94,.4)"></span> 02:28:14 <b>left</b></div>
+    </div>
+    <div class="dash-body">
+      <div class="dash-left">
+        <div class="tabs"><span class="tab active">Physics • 30</span><span class="tab">Chemistry • 30</span><span class="tab">Maths • 30</span></div>
+        <div class="question">Q14. If α, β are roots of x² −6x+4=0, α³+β³ = ?</div>
+        <div class="options">
+          <div class="opt"><b>A</b> 144</div>
+          <div class="opt sel"><b>B</b> 136 — Selected</div>
+          <div class="opt"><b>C</b> 128</div>
+          <div class="opt"><b>D</b> 120</div>
+        </div>
+        <div class="dash-actions"><span class="mini">← Previous</span><span class="mini dark">Save & Next →</span><span class="mini" style="background:#FEF3C7;border-color:#FDE68A">Mark for Review</span></div>
+      </div>
+      <div class="dash-right">
+        <div class="palette-head"><strong>PALETTE</strong><span>14 / 90</span></div>
+        <div class="palette">
+          <span class="pal ans">1</span><span class="pal ans">2</span><span class="pal">3</span><span class="pal mark">4</span><span class="pal">5</span>
+          <span class="pal">6</span><span class="pal curr">7</span><span class="pal ans">8</span><span class="pal">9</span><span class="pal mark">10</span>
+          <span class="pal ans">11</span><span class="pal">12</span><span class="pal">13</span><span class="pal ans" style="background:var(--indigo);color:white">14</span><span class="pal">15</span>
+        </div>
+        <div class="legend"><span><i class="ans"></i>Answered</span><span><i class="mark"></i>Marked</span><span><i class="not"></i>Not visited</span></div>
+        <div style="margin-top:14px;background:white;border:1px solid var(--line);border-radius:12px;padding:12px;box-shadow:var(--soft)">
+          <div style="font-size:11px;font-weight:800;letter-spacing:.06em;margin-bottom:8px">INSTRUCTIONS</div>
+          <div style="height:6px;background:var(--bg);border:1px solid var(--line);border-radius:999px;margin-bottom:6px"></div>
+          <div style="height:6px;background:var(--bg);border:1px solid var(--line);border-radius:999px;width:80%"></div>
+          <div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--indigo)">+4 −1 • 180 mins • 3 sections</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bridge">
+    <div class="bridge-top"><div class="bridge-logo">✦</div><div><strong style="font-size:13px">PARAKH 2.0 AI</strong><br><span style="font-size:11px;color:var(--muted)">Parsing • 38s • soft</span></div><span style="margin-left:auto;font-size:11px;background:var(--ink);color:white;padding:5px 8px;border-radius:999px">39s</span></div>
+    <div class="scan"><i></i></div>
+    <div class="tags"><span class="tag fill"><span class="ck">✓</span> 90 Qs</span><span class="tag fill"><span class="ck">✓</span> 180 mins</span><span class="tag">+4 −1</span><span class="tag">3 Sections</span><span class="tag">PCM</span></div>
+  </div>
+</div>
+
+<div class="strip">
+  <div class="strip-inner">
+    <div class="strip-label">SOFT BUT EXAM-TRUE</div>
+    <div class="pills">
+      <span class="pill"><b>JEE</b> • 90 Qs • 180m</span>
+      <span class="pill"><b>NEET</b> • 200 Qs</span>
+      <span class="pill live">UPSC • CSE</span>
+      <span class="pill">GATE • 65 Qs</span>
+      <span class="pill">SSC • Banking</span>
+      <span class="pill">CAT • CUET</span>
+      <span class="pill" style="background:var(--ink);color:white;border-color:var(--ink)">Any PDF → Soft Mock</span>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="how">
+  <div class="section-head">
+    <div class="kicker"><i></i> PDF → MOCK IN 3 SOFT STEPS</div>
+    <h2>Soft on eyes. <em>Hard on exam.</em></h2>
+    <p>We kept flat’s clarity, added just enough shadow to lift cards off the page — so you can stare for 180 minutes without fatigue.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01 — DROP <span>↗</span></div>
+      <h3>Drop any PDF</h3>
+      <p>Phone scans, 300-page banks, PYQs since 2012. Soft dashed zone catches everything.</p>
+      <div class="visual">
+        <div class="upload"><div class="up">↑</div><strong>Drop PDF</strong><br><span style="font-size:11px;color:var(--muted)">or browse • up to 50MB • soft lift</span></div>
+        <div style="margin-top:8px;display:grid;gap:6px">
+          <div style="border:1px solid var(--line);background:white;padding:8px 10px;border-radius:999px;display:flex;justify-content:space-between;font-weight:700;font-size:12px;box-shadow:var(--soft)"><span>UPSC_2022.pdf</span><span style="background:var(--indigo);color:white;padding:3px 7px;border-radius:999px">11 MB</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02 — SOFT AI <span>✦</span></div>
+      <h3>Soft AI lifts it</h3>
+      <p>Duration, negatives, sections, instructions — lifted into gentle cards with soft shadows.</p>
+      <div class="visual">
+        <div class="grid2">
+          <div class="mini-card"><small style="font-size:10px;letter-spacing:.06em;color:var(--muted)">DURATION</small><br><strong style="font-size:16px">180m</strong></div>
+          <div class="mini-card"><small style="font-size:10px;letter-spacing:.06em;color:var(--muted)">MARKING</small><br><strong style="font-size:16px">+4 −1</strong></div>
+          <div class="mini-card"><small style="font-size:10px;letter-spacing:.06em;color:var(--muted)">SECTIONS</small><br><strong style="font-size:16px">3</strong></div>
+          <div class="mini-card"><small style="font-size:10px;letter-spacing:.06em;color:var(--muted)">Qs</small><br><strong style="font-size:16px">90</strong></div>
+        </div>
+        <div style="margin-top:8px;background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;padding:8px;border-radius:999px;text-align:center;font-weight:700;font-size:11px;box-shadow:0 4px 12px rgba(79,70,229,.18)">✓ Instructions kept soft</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03 — ATTEMPT <span>▶</span></div>
+      <h3>Attempt, comfortably</h3>
+      <p>Palette, timer, mark-for-review — all soft, rounded, legible for the long hall.</p>
+      <div class="visual">
+        <div style="display:flex;justify-content:space-between;font-weight:800;font-size:11px;margin-bottom:8px"><span>Q14 / 90</span><span style="background:var(--ink);color:white;padding:4px 8px;border-radius:999px">01:42:11</span></div>
+        <div style="height:8px;background:linear-gradient(90deg,var(--indigo),var(--violet));border-radius:999px;width:72%;margin-bottom:8px"></div>
+        <div style="height:6px;background:white;border:1px solid var(--line);border-radius:999px;width:88%;margin-bottom:6px"></div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px"><span class="pal ans">1</span><span class="pal mark">2</span><span class="pal">3</span><span class="pal">4</span><span class="pal">5</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="section-head">
+    <div class="kicker"><i></i> WHY FLAT 2.0</div>
+    <h2>Flat’s honesty, <em>with comfort.</em></h2>
+    <p>Flat is fast but can be stark. 2.0 keeps the geometry, adds soft shadows and subtle gradients so your eyes last the full mock.</p>
+  </div>
+  <div class="features">
+    <div class="feat"><div class="feat-icon">▣</div><h4>Reads every type</h4><p>MCQ, MSQ, NAT, comprehension — numbering restarts? We still align.</p></div>
+    <div class="feat"><div class="feat-icon">◎</div><h4>Knows marking</h4><p>+4 −1, +3 −0.33, sectional — all parsed with gentle pills.</p></div>
+    <div class="feat"><div class="feat-icon">≡</div><h4>Instructions kept</h4><p>Original pages, soft scroll, before Start — exactly like PDF.</p></div>
+    <div class="feat"><div class="feat-icon">⚡</div><h4>38 seconds</h4><p>Upload 10:00, start 10:01. No typing.</p></div>
+    <div class="feat"><div class="feat-icon">▦</div><h4>Soft palette</h4><p>Rounded, shadowed, glanceable. Keys 1-4 M N.</p></div>
+    <div class="feat"><div class="feat-icon">✔</div><h4>Calm analysis</h4><p>Score, accuracy, time/Q — soft cards after submit.</p></div>
+  </div>
+</section>
+
+<section class="experience">
+  <div class="exp-wrap">
+    <div class="exp-copy">
+      <div class="kicker"><i></i> THE HALL, SOFTENED</div>
+      <h2>Feels like <em>NTA,</em><br>without the harshness.</h2>
+      <p>We softened the hall — rounded corners, lifted cards, gradients on primary — so you feel the pressure, not the pixels.</p>
+      <div class="points">
+        <div class="point"><i>◷</i><span><strong>Real countdown.</strong> 00:00 auto-submits, softly but firmly.</span></div>
+        <div class="point"><i>▦</i><span><strong>Soft palette.</strong> Shadows separate answered / marked at a glance.</span></div>
+        <div class="point"><i>⇄</i><span><strong>Section glide.</strong> Tabs lift on hover, lock when needed.</span></div>
+      </div>
+      <a href="#try" class="btn-primary">Try soft CBT →</a>
+    </div>
+    <div class="exp-visual">
+      <div class="exp-top"><strong>PARAKH CBT • GATE 2024 — Mock 02</strong><span style="background:var(--ink);color:white;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:700">02:04:11 left</span></div>
+      <div class="exp-body">
+        <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap"><span style="padding:7px 12px;border-radius:999px;background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;font-weight:700;font-size:12px">Aptitude • 10</span><span style="padding:7px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-weight:700;font-size:12px">Core • 55</span></div>
+        <div class="q-meta"><span style="background:#EEF2FF">Q12 • NAT • +2 −0</span><span style="background:#DCFCE7;border-color:#BBF7D0">Calc allowed</span></div>
+        <div class="q-title">Q12. ∫₀¹ x³ eˣ dx = ? (NAT)</div>
+        <div class="opts2">
+          <div class="opt" style="justify-content:center"><span>Answer:</span><span style="background:var(--ink);color:white;padding:6px 12px;border-radius:999px;font-weight:800">2.146</span></div>
+          <div class="opt" style="justify-content:center;background:var(--bg)"><span style="font-size:11px;font-weight:700;letter-spacing:.05em">⌨️ soft numeric keypad</span></div>
+        </div>
+        <div class="exp-bottom"><div style="display:flex;gap:8px"><span class="mini">← Prev</span><span class="mini dark">Save & Next →</span></div><div class="palette-mini"><b>11</b><b class="mark">12</b><b>13</b><b class="on">14</b></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="exams">
+  <div class="exams">
+    <div class="exams-head"><h3>One soft engine.<br>Every Indian exam.</h3><p>From JEE’s sprint to UPSC’s marathon — if it’s a PDF, 2.0 soft-parses it.</p></div>
+    <div class="exam-grid">
+      <div class="exam-card"><strong>JEE Mains & Adv</strong><p>PCM, NAT, paragraph • PYQs 2012→</p><div class="meta">12.5L / year</div></div>
+      <div class="exam-card"><strong>NEET UG</strong><p>200 Qs • Botany-Zoology-Phys-Chem</p><div class="meta">20L / year</div></div>
+      <div class="exam-card"><strong>UPSC CSE</strong><p>GS + CSAT • exact instruction scroll</p><div class="meta">Most detailed</div></div>
+      <div class="exam-card"><strong>GATE</strong><p>MCQ + MSQ + NAT • calc • 30 papers</p><div class="meta">65 Qs • 180m</div></div>
+      <div class="exam-card"><strong>UGC NET</strong><p>Paper 1+2 • 82 subjects • 3h</p><div class="meta">Teaching & Res.</div></div>
+      <div class="exam-card"><strong>SSC CGL</strong><p>Quant • Reasoning • English • GK</p><div class="meta">30L+ candidates</div></div>
+      <div class="exam-card"><strong>Banking PO</strong><p>SBI • IBPS • sectional cutoffs</p><div class="meta">English & Hindi</div></div>
+      <div class="exam-card dark"><strong>CAT • CUET • STATE</strong><p>Any scan, any state. Soft makes it exam.</p><div class="meta">Try now →</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="pricing">
+  <div class="final-card">
+    <div class="final-copy">
+      <h2>Soft flat.<br>Sharp exam.</h2>
+      <p>40,000 aspirants chose soft over stark. Three mocks free, no card — upload your PDF, feel the gentle hall in 38 seconds.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="#try" class="btn-hero-secondary" style="background:white;color:var(--indigo);border:none;box-shadow:0 6px 16px rgba(0,0,0,.12)">Upload PDF — free →</a>
+        <a href="#how" style="border:1px solid rgba(255,255,255,.3);padding:13px 18px;border-radius:14px;font-weight:700;background:rgba(255,255,255,.1)">Watch 24s soft demo</a>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:12px;font-size:12px;font-weight:700;flex-wrap:wrap;opacity:.9"><span>✓ No signup demo</span><span>✓ Scanned OK</span><span>✓ 38s soft</span></div>
+    </div>
+    <div class="final-visual">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><strong style="font-size:11px;letter-spacing:.06em">YOUR LIBRARY</strong><span style="font-weight:800;background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;padding:5px 9px;border-radius:999px">3/3 FREE</span></div>
+      <div style="border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;background:linear-gradient(135deg,#EEF2FF,#E0E7FF)"><div><strong>UPSC GS1 2022 — Mock 01</strong><br><span style="font-size:11px;color:var(--muted)">Score 82/200 • soft perfect</span></div><span style="font-weight:800;background:var(--ink);color:white;padding:6px 10px;border-radius:999px">Analysis →</span></div>
+      <div class="progress"><i></i></div>
+      <div class="stats"><div class="stat"><b>37</b><span>Mocks</span></div><div class="stat"><b>214</b><span>Avg</span></div><div class="stat"><b>68%</b><span>Acc</span></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div><strong>PARAKH FLAT 2.0</strong> © 2026 • Soft shadows • Subtle gradients • Made for India • Privacy • Terms</div>
+  <div>◆ Soft in India • 40k users</div>
+</footer>
+
+<details class="fab"><summary>◈</summary><div class="fab-panel"><div class="fab-header">SWITCH STYLE <span>19 STYLES</span></div><div class="fab-grid">
+<a href="index.html" class="fab-link">V1 SaaS</a>
+<a href="v2-neumorphic.html" class="fab-link">Neumorphic</a>
+<a href="v3-skeuomorphic.html" class="fab-link">Skeuomorphic</a>
+<a href="v-glassmorphism.html" class="fab-link">Glassmorphism</a>
+<a href="v-claymorphism.html" class="fab-link">Claymorphism</a>
+<a href="v-aurora.html" class="fab-link">Aurora</a>
+<a href="v-metalmorphism.html" class="fab-link">Metalmorphism</a>
+<a href="v-flat.html" class="fab-link">Flat</a>
+<a href="v-flat2.html" class="fab-link active">Flat 2.0</a>
+<a href="v-material.html" class="fab-link">Material</a>
+<a href="v-fluent.html" class="fab-link">Fluent</a>
+<a href="v-hig.html" class="fab-link">HIG</a>
+<a href="v4-neubrutalism.html" class="fab-link">Neubrutalism</a>
+<a href="v-brutalist.html" class="fab-link">Brutalist</a>
+<a href="v-cyberpunk.html" class="fab-link">Cyberpunk</a>
+<a href="v-y2k.html" class="fab-link">Y2K Aero</a>
+<a href="v-solarpunk.html" class="fab-link">Solarpunk</a>
+<a href="v-bento.html" class="fab-link">Bento Grid</a>
+<a href="v-minimalist.html" class="fab-link">Minimalist</a>
+<a href="v-dark.html" class="fab-link">Dark Mode</a>
+</div></div></details>
+</body>
+</html>
