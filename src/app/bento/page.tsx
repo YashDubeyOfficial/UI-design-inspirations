@@ -1,0 +1,35 @@
+import type { Metadata } from "next";
+import styles from "./page.module.css";
+import Backdrop from "./_components/Backdrop";
+import SiteNav from "./_components/SiteNav";
+import HeroSection from "./_components/HeroSection";
+import Strip from "./_components/Strip";
+import HowSection from "./_components/HowSection";
+import Exams from "./_components/Exams";
+import Testimonials from "./_components/Testimonials";
+import Faq from "./_components/Faq";
+import FinalCta from "./_components/FinalCta";
+import SiteFooter from "./_components/SiteFooter";
+import FabSwitcher from "./_components/FabSwitcher";
+
+export const metadata: Metadata = {
+  title: "Parakh — Bento Grid • PDF → Real CBT",
+};
+
+export default function Page() {
+  return (
+    <div className={styles.page}>
+      <Backdrop />
+      <SiteNav />
+      <HeroSection />
+      <Strip />
+      <HowSection />
+      <Exams />
+      <Testimonials />
+      <Faq />
+      <FinalCta />
+      <SiteFooter />
+      <FabSwitcher />
+    </div>
+  );
+}

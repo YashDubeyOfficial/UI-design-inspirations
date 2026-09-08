@@ -1,0 +1,14 @@
+import styles from "../page.module.css";
+
+export default function HowItWorks() {
+  return (
+    <section className={styles.section}>
+      <div className={`${styles['section-head']}`}><div className={styles.kicker}><i></i> SOFT BUT SERIOUS</div><h2>Upload. <em>We emboss.</em><br />You attempt.</h2><p>Every card is pressed and lifted from the same surface — calm, tactile, distraction-free. Built for long study hours.</p></div>
+      <div className={styles.steps}>
+        <div className={styles.step}><div className={`${styles['step-num']}`}>01 / UPLOAD <span>↗</span></div><h3>Drop any PDF</h3><p>PYQs, scanned sheets, question banks — even 300 pages. Soft drop zone feels like placing paper on a desk.</p><div className={`${styles['step-visual']}`}><div className={styles.upload}><div className={styles.ico}>↑</div><strong>Drag & drop PDF</strong><br /><span style={{fontSize:'11px', color:'var(--muted)'}}>up to 50MB • PDF</span></div><div className={`${styles['mini-row']}`}>UPSC_2022.pdf <span style={{background:'var(--lime)', padding:'2px 7px', borderRadius:'999px', fontSize:'11px'}}>12.4 MB</span></div></div></div>
+        <div className={styles.step}><div className={`${styles['step-num']}`}>02 / AI READS <span>✦</span></div><h3>AI embosses structure</h3><p>Duration, negatives, sections, instructions — debossed from the paper and rebuilt as crisp modules.</p><div className={`${styles['step-visual']}`}><div className={styles.grid2}><div className={`${styles['mini-card']}`}><small>DURATION</small><br /><strong>180 mins</strong></div><div className={`${styles['mini-card']}`}><small>MARKING</small><br /><strong>+4 −1</strong></div><div className={`${styles['mini-card']}`}><small>SECTIONS</small><br /><strong>3 found</strong></div><div className={`${styles['mini-card']}`}><small>QUESTIONS</small><br /><strong>90 parsed</strong></div></div></div></div>
+        <div className={styles.step}><div className={`${styles['step-num']}`}>03 / ATTEMPT <span>▶</span></div><h3>Attempt in soft depth</h3><p>Palette, timer and controls are gently raised — eyes stay calm even in a 3-hour mock.</p><div className={`${styles['step-visual']}`} style={{padding:'0', overflow:'hidden'}}><div style={{display:'flex', justifyContent:'space-between', padding:'10px 12px', fontSize:'11px', fontWeight:'800'}}><span>Q 14/90</span><span className={`${styles['btn-neu']}`} style={{padding:'4px 8px', fontSize:'10px'}}>01:42:11</span></div><div style={{padding:'12px'}}><div className={`${styles.lines} ${styles.w90}`}></div><div className={`${styles.lines} w70`}></div><div style={{display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:'6px', marginTop:'10px'}}><span className={`${styles.pal} ${styles.ans}`}>1</span><span className={`${styles.pal} ${styles.mark}`}>2</span><span className={styles.pal}>3</span><span className={styles.pal}>4</span><span className={styles.pal}>5</span></div></div></div></div>
+      </div>
+    </section>
+  );
+}

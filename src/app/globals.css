@@ -1,0 +1,126 @@
+/* UI-design-inspirations global — shared by every design (src/index.css).
+   Top switcher bar + base reset. Design-specific styles live in each folder's style.css. */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+a{color:inherit;text-decoration:none}
+
+/* Top style pill bar - 1-click switch */
+.style-bar{
+  max-width:1180px;margin:14px auto 0;padding:0 16px;
+  position:sticky;top:76px;z-index:45;
+}
+.style-bar-inner{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  padding:8px 10px;
+  background:rgba(255,253,247,.92);backdrop-filter:blur(12px) saturate(1.2);
+  border:1px solid rgba(14,20,36,.08);border-radius:999px;
+  box-shadow:0 8px 24px rgba(14,20,36,.08), 0 2px 8px rgba(14,20,36,.06);
+}
+.style-bar-inner::-webkit-scrollbar{display:none}
+.style-pill{
+  white-space:nowrap;flex-shrink:0;
+  padding:8px 14px;border-radius:999px;
+  font-size:12.5px;font-weight:800;letter-spacing:-.01em;
+  border:1px solid transparent;background:transparent;color:#5A4A32;
+  transition:.15s;line-height:1;
+}
+.style-pill.active{
+  background:#0E1424;color:#D9FF54;border-color:#0E1424;
+  box-shadow:0 4px 12px rgba(14,20,36,.15);
+}
+.style-pill:hover{background:#FFF6D5;border-color:#E8D9B0;color:#0E1424}
+@media(max-width:640px){
+  .style-bar{top:68px;margin-top:10px}
+  .style-pill{padding:7px 11px;font-size:12px}
+}
+
+/* Top full-width style bar - above everything */
+.style-bar{
+  display:none; /* hide old bar if any leftover */
+}
+.style-bar-full{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  position:sticky;top:0;z-index:60;
+  width:100%;
+  background:rgba(255,253,247,.94);backdrop-filter:blur(14px) saturate(1.2);
+  border-bottom:1px solid rgba(14,20,36,.08);
+  box-shadow:0 4px 20px rgba(14,20,36,.06);
+  padding:10px 0;
+}
+.style-bar-inner-full{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  padding:0 16px;
+  max-width:1180px;margin:0 auto;
+  align-items:center;
+  scroll-behavior:smooth;
+  scroll-padding-inline:50%;
+}
+.style-bar-inner-full::-webkit-scrollbar{display:none}
+.style-pill-full{
+  white-space:nowrap;flex-shrink:0;
+  padding:8px 14px;border-radius:999px;
+  font-size:12.5px;font-weight:800;letter-spacing:-.01em;
+  border:1px solid transparent;background:transparent;color:#5A4A32;
+  transition:.15s;line-height:1;
+  scroll-margin-inline:50%;
+}
+.style-pill-full.active{
+  background:#0E1424;color:#D9FF54;border-color:#0E1424;
+  box-shadow:0 4px 12px rgba(14,20,36,.15);
+}
+.style-pill-full:hover{background:#FFF6D5;border-color:#E8D9B0;color:#0E1424}
+@media(max-width:640px){
+  .style-bar-full{padding:8px 0}
+  .style-pill-full{padding:7px 11px;font-size:12px}
+}
+
+/* Two-level switcher: category bar (top) + design bar (below).
+   The stack sticks as one unit so the rows never overlap. */
+.switcher-stack{
+  position:sticky;top:0;z-index:60;
+}
+/* Top-level category bar — same pill language, inverted treatment
+   so the hierarchy reads instantly. */
+.cat-bar-full{
+  width:100%;
+  background:#0E1424;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  box-shadow:0 4px 20px rgba(14,20,36,.18);
+  padding:8px 0;
+}
+.cat-bar-inner-full{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  padding:0 16px;
+  max-width:1180px;margin:0 auto;
+  align-items:center;
+  scroll-behavior:smooth;
+  scroll-padding-inline:50%;
+}
+.cat-bar-inner-full::-webkit-scrollbar{display:none}
+.cat-pill-full{
+  white-space:nowrap;flex-shrink:0;
+  padding:7px 13px;border-radius:999px;
+  font-size:12px;font-weight:800;letter-spacing:-.01em;
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  border:1px solid rgba(255,255,255,.14);background:transparent;color:rgba(255,255,255,.72);
+  transition:.15s;line-height:1;
+  scroll-margin-inline:50%;
+  text-decoration:none;
+}
+.cat-pill-full.active{
+  background:#D9FF54;color:#0E1424;border-color:#D9FF54;
+  box-shadow:0 4px 12px rgba(217,255,84,.25);
+}
+.cat-pill-full:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22);color:#fff}
+.cat-pill-full.active:hover{background:#D9FF54;color:#0E1424}
+/* Marker for not-yet-built designs in the second bar. */
+.soon-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:currentColor;opacity:.45;
+  display:inline-block;margin-left:7px;vertical-align:1px;
+}
+.style-pill-full.active .soon-dot{background:#D9FF54;opacity:1}
+@media(max-width:640px){
+  .cat-bar-full{padding:6px 0}
+  .cat-pill-full{padding:6px 10px;font-size:11.5px}
+}
