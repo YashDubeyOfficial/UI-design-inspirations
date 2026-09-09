@@ -7,7 +7,7 @@ import {
   categoryDefaultHref,
   normalizePath,
   resolveRoute,
-} from "@/lib/categories";
+} from "../lib/categories";
 import { useCenterActive } from "./useCenterActive";
 
 /**

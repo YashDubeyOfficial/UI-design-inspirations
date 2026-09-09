@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { normalizePath, resolveRoute } from "@/lib/categories";
+import { normalizePath, resolveRoute } from "../lib/categories";
 import { useCenterActive } from "./useCenterActive";
 
 /**
  * Second-level bar: subcategories of the currently active main category.
- * Built designs link to their route; the rest open the shared
- * under-construction screen (/wip/[slug]). A dot marks unbuilt pills.
+ * Unbuilt designs (if any) link to the shared under-construction screen
+ * and get a marker dot. All subs are currently built.
  */
 export default function StyleBar() {
   const pathname = normalizePath(usePathname());

@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-page-custom-font -- App Router has no pages/_document; font <link>s here load once globally, which is what that Pages-Router rule wants. */
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import CategoryBar from "@/components/CategoryBar";
-import StyleBar from "@/components/StyleBar";
+import CategoryBar from "../components/CategoryBar";
+import StyleBar from "../components/StyleBar";
 
 export const metadata: Metadata = {
   title: "Parakh — Turn any PDF into a real CBT mock. Instantly.",
